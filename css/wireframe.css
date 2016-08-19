@@ -1,0 +1,126 @@
+body {
+  background: blue;
+  width: 640px;
+  margin: 0 auto;
+}
+
+header {
+  margin: 10px auto 0 auto;
+  text-align: center;
+  color: white;
+  font-size: 36px;
+}
+
+main {
+  height: 550px;
+  width: 600px;
+  background: red;
+  margin: 10px auto 0  auto;
+  border-radius: 10px;
+}
+
+
+footer ul {
+  margin-top: 0px;
+  text-align: center;
+}
+
+footer ul li {
+  display: inline;
+  text-align: center;
+  margin: 0 10px;
+  color: white;
+}
+
+footer ul li {
+  display: inline;
+  text-align: center;
+  margin: 0 10px;
+  color: white;
+  line-height: 0px;
+}
+
+#score-block {
+  height: 200px;
+  width: 100px;
+  background: green;
+  border-radius: 10px;
+  border: 10px ridge grey;
+  float: left;
+  display: inline-block;
+  margin: 175px 22px;
+}
+
+#score-block li {
+  height: 64px;
+  border: 1px solid black;
+  list-style: none;
+  text-align: center;
+}
+
+
+#score-block li h3{
+  color: white;
+  padding-top: 5px;
+  text-align: center;
+}
+
+#score-block li p {
+  line-height: 40px;
+  font-size: 30px
+}
+
+#playing-grid {
+  height: 480px;
+  width: 240px;
+  background: green;
+  border-radius: 10px;
+  border: 10px ridge grey;
+  float: left;
+  display: inline-block;
+  margin: 15px 5px;
+}
+
+#playing-grid ul li {
+  height: 22px;
+  width: 22px;
+  float: left;
+  border: 1px solid black;
+}
+
+#next-up {
+  height: 200px;
+  width: 100px;
+  background: green;
+  border-radius: 10px;
+  border: 10px ridge grey;
+  float: left;
+  display: inline-block;
+  margin: 175px 22px;
+}
+
+#next-up li{
+  list-style: none;
+  height: 56px;
+  line-height: 56px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+#next-up h3 {
+  color: white;
+  text-align: center;
+  padding-top: 5px;
+  height: 20px;
+}
+
+#game-buttons {
+  clear: both;
+  margin: 0 auto;
+  text-align: center;
+  height: 50px;
+}
+
+#game-buttons li {
+  display: inline
+}
