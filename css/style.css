@@ -1,14 +1,14 @@
 body {
-  background: black;
+  background: #080740;
   width: 640px;
   margin: 0 auto;
   font-family: 'Orbitron', sans-serif;
+  color: silver;
 }
 
 header {
-  margin: 10px auto 0 auto;
+  margin: 15px auto 0 auto;
   text-align: center;
-  color: white;
   font-size: 36px;
   font-weight: 700;
 }
@@ -17,7 +17,7 @@ main {
   height: 530px;
   width: 600px;
   background: red;
-  margin: 5px auto 0  auto;
+  margin: 15px auto 0  auto;
   border-radius: 10px;
   border: 1px solid silver;
   background: -webkit-linear-gradient(#2a2a22, #26248e, #2a2a22); /* For Safari 5.1 to 6.0 */
@@ -26,24 +26,20 @@ main {
   background: linear-gradient(#2a2a22, #26248e, #2a2a22); /* Standard syntax */
 }
 
+footer{
+margin-top: 20px;
+}
 
 footer ul {
-/*  margin-top: 0px;*/
+  margin-top: 0px;
   text-align: center;
 }
+
 
 footer ul li {
   display: inline;
   text-align: center;
   margin: 0 10px;
-  color: white;
-}
-
-footer ul li {
-  display: inline;
-  text-align: center;
-  margin: 0 10px;
-  color: white;
   line-height: 0px;
 }
 
@@ -67,7 +63,6 @@ footer ul li {
 
 
 #score-block li h3{
-  color: white;
   padding-top: 5px;
   text-align: center;
 }
@@ -126,7 +121,6 @@ footer ul li {
 }
 
 #next-up h3 {
-  color: white;
   text-align: center;
   padding-top: 5px;
   height: 20px;
