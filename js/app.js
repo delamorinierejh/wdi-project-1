@@ -17,7 +17,7 @@ var gameActive = true;
 var isAtBottom = false;
 
 function startTheGame(){
-  setInterval(moveRowDown, 800);
+  setInterval(moveRowDown, 500);
 }
 
 function moveRowDown(){
@@ -282,7 +282,7 @@ $('body').on('keydown', function(e){
     // }
     for (var i = 0; i < 4; i++){
       if ($($squares[currentLi + shape.rotations[i]]).value != 1){
-        $($squares[currentLi + shape.rotations[rotation][i]]).css('background', shape.colour);
+        $($squares[currentLi + shape.rotations[rotation][i]]).css('background-color', shape.colour);
       }
     }
   }
