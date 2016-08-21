@@ -49,6 +49,7 @@ footer ul li {
 }
 
 #score-block {
+  padding-top: 12px;
   height: 200px;
   width: 100px;
   background: #4a4141;
@@ -62,7 +63,7 @@ footer ul li {
 
 #score-block li {
   height: 64px;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   list-style: none;
   text-align: center;
 }
@@ -111,6 +112,8 @@ footer ul li {
 }
 
 #next-up {
+  padding-top: 8px;
+  padding-bottom: 4px;
   height: 200px;
   width: 100px;
   background: #4a4141;
@@ -126,12 +129,13 @@ footer ul li {
   list-style: none;
   height: 56px;
   line-height: 56px;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   text-align: center;
   font-size: 30px;
   text-shadow: 2px 2px #000;
   background-repeat: no-repeat;
   background-position: center;
+/*  background-size: */
 }
 
 #next-up h3 {

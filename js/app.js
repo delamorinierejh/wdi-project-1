@@ -43,6 +43,7 @@ var intervalId;
 function startTheGame(){
   intervalId = setInterval(moveRowDown, 500);
   updateTheBoard();
+  $('#intro-song').trigger('play');
 }
 
 function gameOverCheck(){
@@ -54,7 +55,7 @@ function gameOverCheck(){
 }
 
 function gameOverAlert(){
-  console.log('game over');
+  $('#game-over-sound').trigger('play');
   clearInterval(intervalId);
   $('body').off('keydown', letsRotate);
   $('body').off('keydown', rightMove);
@@ -119,7 +120,7 @@ function newPiece(){
     if (rowFilled){
       score += 100;
       lines++;
-      console.log('' + k + 'filled');
+      $('#row-done').trigger('play');
       for (var m = 0; m < 10; m++){
         $($squares)[10*k+m].remove();
         $($grid).prepend("<li class='squares' value='0'></li>");
