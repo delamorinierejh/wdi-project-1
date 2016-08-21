@@ -1,5 +1,7 @@
 body {
   background: #080740;
+  background-image: url('../images/circuit_board.jpg');
+  background-size: cover;
   width: 640px;
   margin: 0 auto;
   font-family: 'Orbitron', sans-serif;
@@ -11,6 +13,8 @@ header {
   text-align: center;
   font-size: 36px;
   font-weight: 700;
+  text-shadow: 4px 4px #6f769c;
+  color: #f3ff3b;
 }
 
 main {
@@ -41,6 +45,7 @@ footer ul li {
   text-align: center;
   margin: 0 10px;
   line-height: 0px;
+  text-shadow: 1px 1px #999;
 }
 
 #score-block {
@@ -49,6 +54,7 @@ footer ul li {
   background: #4a3939;
   border-radius: 10px;
   border: 10px ridge grey;
+  box-shadow: 2px 2px #111;
   float: left;
   display: inline-block;
   margin: 158px 22px;
@@ -65,11 +71,13 @@ footer ul li {
 #score-block li h3{
   padding-top: 5px;
   text-align: center;
+  text-shadow: 2px 2px #000;
 }
 
 #score-block li p {
   line-height: 40px;
-  font-size: 30px
+  font-size: 30px;
+  text-shadow: 2px 2px #000;
 }
 
 #playing-grid {
@@ -81,11 +89,12 @@ footer ul li {
   display: inline-block;
   margin: 15px 5px 0 5px;
   position: relative;
-  background: -webkit-linear-gradient(#272719, #a5a3a3, #272719); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(#272719, #a5a3a3, #272719); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(#272719, #a5a3a3, #272719); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(#272719, #a5a3a3, #272719); /* Standard syntax */
+  background: -webkit-linear-gradient(#272719, #6b6969, #272719); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#272719, #6b6969, #272719); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#272719, #6b6969, #272719); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#272719, #6b6969, #272719); /* Standard syntax */
   overflow: hidden;
+  box-shadow: 2px 2px #111;
 }
 
 #playing-grid ul{
@@ -98,7 +107,7 @@ footer ul li {
   height: 22px;
   width: 22px;
   float: left;
-  border: 0.5px solid #2c2b2b;
+  border: 0.5px solid rgba(0,0,0,0.4);
 }
 
 #next-up {
@@ -110,6 +119,7 @@ footer ul li {
   float: left;
   display: inline-block;
   margin: 158px 22px;
+  box-shadow: 2px 2px #111;
 }
 
 #next-up li{
@@ -119,12 +129,14 @@ footer ul li {
   border: 1px solid black;
   text-align: center;
   font-size: 30px;
+  text-shadow: 2px 2px #000;
 }
 
 #next-up h3 {
   text-align: center;
   padding-top: 5px;
   height: 20px;
+  text-shadow: 2px 2px #000;
 }
 
 #game-buttons {

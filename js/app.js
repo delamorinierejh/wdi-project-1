@@ -55,7 +55,7 @@ startTheGame();
 
   // OBJECTS FOR EACH OF THE SHAPES
   var iShape = {
-    colour: 'orange',
+    colour: '#F9C80E',
     rotations: [[1,11,21,31],[10,11,12,13],[1,11,21,31],[10,11,12,13]],
     leftmost: [1,0,1,0],
     rightmost: [1,3,1,3],
@@ -68,7 +68,7 @@ startTheGame();
   };
 
   var jShape = {
-    colour: 'red',
+    colour: '#70D6FF',
     rotations: [[1,2,11,21],[10,11,12,22],[1,11,20,21],[0,10,11,12]],
     leftmost: [1,0,0,0],
     rightmost: [2,2,1,2],
@@ -82,7 +82,7 @@ startTheGame();
   };
 
   var oShape = {
-    colour: 'blue',
+    colour: '#FC440F',
     rotations: [[11,12,21,22],[11,12,21,22],[11,12,21,22],[11,12,21,22]],
     leftmost: [1,1,1,1],
     rightmost: [2,2,2,2],
@@ -95,7 +95,7 @@ startTheGame();
   };
 
   var lShape = {
-    colour: 'pink',
+    colour: '#4AFF05',
     rotations: [[0,1,11,21],[2,10,11,12],[1,11,21,22],[10,11,12,20]],
     leftmost: [0,0,1,0],
     rightmost: [1,2,2,2],
@@ -108,7 +108,7 @@ startTheGame();
   };
 
   var tShape = {
-    colour: 'brown',
+    colour: '#FF9800',
     rotations: [[1,10,11,12],[1,11,12,21],[10,11,12,21],[1,10,11,21]],
     leftmost: [0,1,0,1],
     rightmost: [2,2,2,1],
@@ -121,7 +121,7 @@ startTheGame();
   };
 
   var zShape = {
-    colour: 'purple',
+    colour: '#DD38FF',
     rotations: [[1,10,11,20],[0,1,11,12],[1,10,11,20],[0,1,11,12]],
     leftmost: [0,0,0,0],
     rightmost: [1,2,1,2],
@@ -134,7 +134,7 @@ startTheGame();
   };
 
   var sShape = {
-    colour: 'yellow',
+    colour: '#44FFE9',
     rotations: [[0,10,11,21],[1,2,10,11],[0,10,11,21],[1,2,10,11]],
     leftmost: [0,0,0,0],
     rightmost: [1,2,1,2],
@@ -282,7 +282,10 @@ $('body').on('keydown', function(e){
     // }
     for (var i = 0; i < 4; i++){
       if ($($squares[currentLi + shape.rotations[i]]).value != 1){
-        $($squares[currentLi + shape.rotations[rotation][i]]).css('background-color', shape.colour);
+        // $($squares[currentLi + shape.rotations[rotation][i]]).css('background-color', shape.colour);
+        $($squares[currentLi + shape.rotations[rotation][i]]).css({
+          background: "radial-gradient(" + shape.colour + ", #555)" 
+        });
       }
     }
   }
