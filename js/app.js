@@ -1,10 +1,32 @@
 var $squares = $('.squares');
 
+var $grid = $('#grid-ul');
+
+var $scoreBoard = $('#score-count');
+
+var $lineBoard = $('#lines-count');
+
+var $levelBoard = $('#level-count');
+
+var $nextUpOne = $('#next-up-one');
+
+var $nextUpTwo = $('#next-up-two');
+
+var $nextUpThree = $('#next-up-three');
+
+var $header = $('h1');
+
+var score = 0;
+
+var lines = 0;
+
+var level = 1;
+
 //setting the rotation to 0 initally so that first rotation for each shape is chosen on load
 var rotation = 0;
 
 //randomly selected starting element
-var currentLi = Math.floor(Math.random()*3)+4;
+var currentLi = Math.floor(Math.random()*3)+14;
 
 var previousLi;
 
@@ -16,15 +38,54 @@ var gameActive = true;
 
 var isAtBottom = false;
 
+var intervalId;
+
 function startTheGame(){
-  setInterval(moveRowDown, 500);
+  intervalId = setInterval(moveRowDown, 500);
+  updateTheBoard();
+}
+
+function gameOverCheck(){
+  for (var i = 0; i < 10; i++){
+    if ($($squares)[20+i].value === 1){
+      gameOverAlert();
+    }
+  }
+}
+
+function gameOverAlert(){
+  console.log('game over');
+  clearInterval(intervalId);
+  $('body').off('keydown', letsRotate);
+  $('body').off('keydown', rightMove);
+  $('body').off('keydown', leftMove);
+  $('body').off('keydown', downMove);
+  $header.html('GAME OVER');
+}
+
+function updateTheBoard(){
+  $($scoreBoard).html(score);
+  $($lineBoard).html(lines);
+  $($levelBoard).html(level);
+  $($nextUpOne).css('background-image', 'url("' + chosenTwo.image + '")');
+  $($nextUpTwo).css('background-image', 'url("' + chosenThree.image + '")');
+  $($nextUpThree).css('background-image', 'url("' + chosenFour.image + '")');
 }
 
 function moveRowDown(){
   if (currentLi + chosenOne.rotations[rotation][3] > 229){
     newPiece();
   }
-  else if (gameActive){
+  var iCanGoOn = true;
+  for (var i = 0; i < 4; i++){
+    var x = currentLi + 10 + chosenOne.rotations[rotation][i];
+    if ($($squares)[x].value  == 1){
+      console.log('yes');
+      iCanGoOn = false;
+      break;
+    }
+  }
+  if (iCanGoOn){
     for (var i = 0; i < 4; i++){
       if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
         $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
@@ -35,124 +96,161 @@ function moveRowDown(){
       currentLi +=10;
       lightEmUp(chosenOne);
     }
+  } else {
+    newPiece();
   }
 
 }
 
 function newPiece(){
+  gameOverCheck();
+  score+= (5*level);
   for (var i = 0; i < 4; i++){
     $($squares)[currentLi + chosenOne.rotations[rotation][i]].value = 1;
+  }
+  for (var k = 0; k < 24; k++){
+    var rowFilled = true;
+    for (var l = 0; l < 10; l++){
+      if ($($squares)[10*k+l].value != 1){
+        rowFilled = false;
+        continue;
+      }
+    }
+    if (rowFilled){
+      score += 100;
+      lines++;
+      console.log('' + k + 'filled');
+      for (var m = 0; m < 10; m++){
+        $($squares)[10*k+m].remove();
+        $($grid).prepend("<li class='squares' value='0'></li>");
+      }
+    }
+    $squares = $('.squares');
   }
   currentLi = Math.floor(Math.random()*3)+4;
   currentColumn = ('' + currentLi).split('')[('' + currentLi).split('').length -1];
   currentRow = 0;
-  chosenOne = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
+  chosenOne = chosenTwo; 
+  chosenTwo = chosenThree;
+  chosenThree = chosenFour;
+  chosenFour = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
   rotations = 0;
+  updateTheBoard();
   lightEmUp(chosenOne);
 }
-
-startTheGame();
 
   // OBJECTS FOR EACH OF THE SHAPES
   var iShape = {
     colour: '#F9C80E',
     rotations: [[1,11,21,31],[10,11,12,13],[1,11,21,31],[10,11,12,13]],
-    leftmost: [1,0,1,0],
-    rightmost: [1,3,1,3],
+    leftmost: [1,10,1,10],
+    rightmost: [11,13,11,13],
     spaceAtBottom: [0,2,0,2],
     blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftRight: [1,0,1,0],
     shiftLeft: [2,0,2,0],
     shiftUp: [0,2,0,2],
-    bottomSpace: [1,0,1,0]
+    bottomSpace: [1,0,1,0],
+    image: 'images/iShape.png'
   };
 
   var jShape = {
     colour: '#70D6FF',
     rotations: [[1,2,11,21],[10,11,12,22],[1,11,20,21],[0,10,11,12]],
-    leftmost: [1,0,0,0],
-    rightmost: [2,2,1,2],
+    leftmost: [1,10,20,0],
+    rightmost: [2,12,1,12],
     spaceAtBottom: [1,1,1,2],
     blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftRight: [1,0,0,0],
     shiftLeft: [0,0,1,0],
     shiftUp: [0,0,0,1],
-    bottomSpace: [0,0,0,0]
-
+    bottomSpace: [0,0,0,0],
+    image: 'images/jShape.png'
   };
 
   var oShape = {
     colour: '#FC440F',
     rotations: [[11,12,21,22],[11,12,21,22],[11,12,21,22],[11,12,21,22]],
-    leftmost: [1,1,1,1],
-    rightmost: [2,2,2,2],
+    leftmost: [11,11,11,11],
+    rightmost: [12,12,12,12],
     spaceAtBottom: [1,1,1,1],
     blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftLeft: [0,0,0,0],
     shiftRight: [0,0,0,0],
     shiftUp: [0,0,0,0],
-    bottomSpace: [0,0,0,0]
+    bottomSpace: [0,0,0,0],
+    image: 'images/oShape.png'
   };
 
   var lShape = {
     colour: '#4AFF05',
     rotations: [[0,1,11,21],[2,10,11,12],[1,11,21,22],[10,11,12,20]],
-    leftmost: [0,0,1,0],
-    rightmost: [1,2,2,2],
+    leftmost: [0,10,1,10],
+    rightmost: [1,12,22,12],
     spaceAtBottom: [1,2,1,1],
     blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftLeft: [1,0,0,0],
     shiftRight: [0,0,1,0],
     shiftUp: [0,1,0,0],
-    bottomSpace: [0,0,0,0]
+    bottomSpace: [0,0,0,0],
+    image: 'images/lShape.png'
   };
 
   var tShape = {
     colour: '#FF9800',
     rotations: [[1,10,11,12],[1,11,12,21],[10,11,12,21],[1,10,11,21]],
-    leftmost: [0,1,0,1],
-    rightmost: [2,2,2,1],
+    leftmost: [10,1,10,10],
+    rightmost: [12,12,12,1],
     spaceAtBottom: [2,1,1,1],
     blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftLeft: [0,0,0,1],
     shiftRight: [0,1,0,0],
     shiftUp: [1,0,0,0],
-    bottomSpace: [0,0,0,0]
+    bottomSpace: [0,0,0,0],
+    image: 'images/tShape.png'
   };
 
   var zShape = {
     colour: '#DD38FF',
     rotations: [[1,10,11,20],[0,1,11,12],[1,10,11,20],[0,1,11,12]],
-    leftmost: [0,0,0,0],
-    rightmost: [1,2,1,2],
+    leftmost: [10,0,10,0],
+    rightmost: [1,12,1,12],
     spaceAtBottom: [1,2,1,2],
     blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftLeft: [1,0,1,0],
     shiftRight: [0,0,0,0],
     shiftUp: [0,1,0,1],
-    bottomSpace: [0,0,0,0]
+    bottomSpace: [0,0,0,0],
+    image: 'images/zShape.png'
   };
 
   var sShape = {
     colour: '#44FFE9',
     rotations: [[0,10,11,21],[1,2,10,11],[0,10,11,21],[1,2,10,11]],
-    leftmost: [0,0,0,0],
-    rightmost: [1,2,1,2],
+    leftmost: [0,10,0,10],
+    rightmost: [11,2,11,2],
     spaceAtBottom: [1,2,1,2],
     blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftLeft: [1,0,1,0],
     shiftRight: [0,0,0,0],
     shiftUp: [0,1,0,1],
-    bottomSpace: [0,0,0,0]
+    bottomSpace: [0,0,0,0],
+    image: 'images/sShape.png'
   };
 
   
   //ARRAY TO SEE WHICH OBJECT TYPE TO PICK
-  var possibleShapes = [iShape, jShape, lShape, oShape, sShape, zShape, tShape];
+  var possibleShapes = [iShape, jShape, lShape, oShape, sShape, zShape, tShape,];
 
 
   // variable that choose the random shape
   var chosenOne = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
+
+  var chosenTwo = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
+
+  var chosenThree = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
+
+  var chosenFour = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
 
   //variables to determine how many blank spaces are natrually to the right and left of the shape within its 4x4 grid
   var rightRemaining = chosenOne.rightmost[rotation];
@@ -163,56 +261,72 @@ startTheGame();
 
 
 // rotation upbutton
-$('body').on('keydown', function(e){
+$('body').on('keydown', letsRotate);
+
+function letsRotate(e){
   if (e.keyCode == 38){
-    for (var i = 0; i < 4; i++) {
-      $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
+    var iCanRotate = true;
+    for (var i = 0; i < 4; i++){
+      if (rotation === 3){
+        var holdRotation = -1;
+      } else {
+        var holdRotation = rotation;
+      }
+      var x = currentLi + chosenOne.rotations[holdRotation + 1][i];
+      if ($($squares)[x].value  == 1){
+        iCanRotate = false;
+        break;
+      }
     }
-    if (rotation === 4){
-      rotation = 0; 
-    }
-    if (chosenOne.shiftRight[rotation] == 1 && currentColumn == 1){
-      currentLi +=1;
-      currentColumn++;
-    }
-    if (chosenOne.shiftRight[rotation] == 1 && currentColumn == 9){
-      currentLi +=1;
-      currentColumn++;
-    }
-    if (chosenOne.shiftRight[rotation] == 2 && currentColumn == 0){
-      currentLi +=1;
-      currentColumn++;
-    }
-    if (chosenOne.shiftLeft[rotation] == 1 && currentColumn == 8){
-      currentLi -=1;
-      currentColumn--;
-    }
-    if (chosenOne.shiftLeft[rotation] == 2 && currentColumn == 8){
-      currentLi -=2;
-      currentColumn-=2;
-    }
-    if (chosenOne.shiftLeft[rotation] == 2 && currentColumn == 7){
-      currentLi -=1;
-      currentColumn--;
-    }
-    if (chosenOne.shiftUp[rotation] == 1 && currentRow == 22){
-      currentLi -=10;
-      currentRow--;
-    }
-    if (chosenOne.shiftUp[rotation] == 2 && currentRow > 21){
-      currentLi -=20;
-      currentRow-=2;
-    }
-    if (chosenOne.shiftUp[rotation] == 2 && currentRow == 21){
-      currentLi -=10;
-      currentRow--;
-    }
-    rotation++;
-    if (rotation === 4){
-      rotation = 0;
-    }
-    currentColumn = ('' + currentLi).split('');
-    currentColumn = currentColumn[currentColumn.length-1];
+    if (iCanRotate){
+      for (var i = 0; i < 4; i++) {
+        $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
+      }
+      if (rotation === 4){
+        rotation = 0; 
+      }
+      if (chosenOne.shiftRight[rotation] == 1 && currentColumn == 1){
+        currentLi +=1;
+        currentColumn++;
+      }
+      if (chosenOne.shiftRight[rotation] == 1 && currentColumn == 9){
+        currentLi +=1;
+        currentColumn++;
+      }
+      if (chosenOne.shiftRight[rotation] == 2 && currentColumn == 0){
+        currentLi +=1;
+        currentColumn++;
+      }
+      if (chosenOne.shiftLeft[rotation] == 1 && currentColumn == 8){
+        currentLi -=1;
+        currentColumn--;
+      }
+      if (chosenOne.shiftLeft[rotation] == 2 && currentColumn == 8){
+        currentLi -=2;
+        currentColumn-=2;
+      }
+      if (chosenOne.shiftLeft[rotation] == 2 && currentColumn == 7){
+        currentLi -=1;
+        currentColumn--;
+      }
+      if (chosenOne.shiftUp[rotation] == 1 && currentRow == 22){
+        currentLi -=10;
+        currentRow--;
+      }
+      if (chosenOne.shiftUp[rotation] == 2 && currentRow > 21){
+        currentLi -=20;
+        currentRow-=2;
+      }
+      if (chosenOne.shiftUp[rotation] == 2 && currentRow == 21){
+        currentLi -=10;
+        currentRow--;
+      }
+      rotation++;
+      if (rotation === 4){
+        rotation = 0;
+      }
+      currentColumn = ('' + currentLi).split('');
+      currentColumn = currentColumn[currentColumn.length-1];
       // currentLi += chosenOne.shiftLeft[rotation];
       // currentLi += chosenOne.shiftRight[rotation];
       rightRemaining = chosenOne.rightmost[rotation];
@@ -222,53 +336,90 @@ $('body').on('keydown', function(e){
       //var currentLi = Math.floor(Math.random()*5)+3;
       lightEmUp(chosenOne);
     }
-  })
+  }
+}
 
 
   // move down downbutton
-  $('body').on('keydown', function(e){
-    if (e.keyCode == 40 && currentLi + chosenOne.rotations[rotation][3] < 230){
-      for (var i = 0; i < 4; i++){
-        if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
-          $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
+  $('body').on('keydown', downMove);
+
+  function downMove(e){
+      if (e.keyCode == 40 && currentLi + chosenOne.rotations[rotation][3] < 230){
+        var iCanGoOn = true;
+        for (var i = 0; i < 4; i++){
+          var x = currentLi + 10 + chosenOne.rotations[rotation][i];
+          if ($($squares)[x].value  == 1){
+            iCanGoOn = false;
+            break;
+          }
+        }
+        if (iCanGoOn){
+          for (var i = 0; i < 4; i++){
+            if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
+              $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
+            }
+          }
+          previousLi = currentLi;
+          currentLi+= 10;
+          currentRow++;
+          lightEmUp(chosenOne);
         }
       }
-      previousLi = currentLi;
-      currentLi+= 10;
-      currentRow++;
-      lightEmUp(chosenOne);
     }
-  })
+  
 
   // move  left button
-  $('body').on('keydown', function(e){
-    if (e.keyCode == 37 && (currentLi + leftRemaining)%10 !== 0){
-      for (var i = 0; i < 4; i++){
-        if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
-          $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
+  $('body').on('keydown', leftMove);
+
+  function leftMove(e){
+      if (e.keyCode == 37 && (currentLi + chosenOne.leftmost[rotation])%10 !== 0){
+        var iCanGoLeft = true;
+        for (var i = 0; i < 4; i++){
+          var x = currentLi - 1 + chosenOne.rotations[rotation][i];
+          if ($($squares)[x].value  == 1){
+            iCanGoLeft = false;
+            break;
+          }
+        }
+        if (iCanGoLeft){
+          for (var i = 0; i < 4; i++){
+            if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
+              $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
+            }
+          }
+          currentLi--;
+          lightEmUp(chosenOne);
         }
       }
-      currentLi--;
-      lightEmUp(chosenOne);
     }
-  })
 
 
   // move right button
-  $('body').on('keydown', function(e){
-    if (e.keyCode == 39 && ((currentLi + rightRemaining)%10 !==9)){
-      for (var i = 0; i < 4; i++){
-        if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
-          $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
+  $('body').on('keydown', rightMove);
+
+
+  function rightMove(e){
+      if (e.keyCode == 39 && ((currentLi + chosenOne.rightmost[rotation] + 1)%10 !==0)){
+        var iCanGoRight = true;
+        for (var i = 0; i < 4; i++){
+          var x = currentLi + 1 + chosenOne.rotations[rotation][i];
+          if ($($squares)[x].value  == 1){
+            iCanGoRight = false;
+            break;
+          }
+        }
+        if (iCanGoRight){
+          for (var i = 0; i < 4; i++){
+            if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
+              $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
+            }
+          }
+          previousLi = currentLi;
+          currentLi++;
+          lightEmUp(chosenOne);
         }
       }
-      previousLi = currentLi;
-      currentLi++;
     }
-    lightEmUp(chosenOne);
-  })
-
-
 
   //the function to rerender the grid so that it is correctly lit up
   function lightEmUp(shape){
@@ -290,7 +441,7 @@ $('body').on('keydown', function(e){
     }
   }
 
-
+  startTheGame();
 
 
 

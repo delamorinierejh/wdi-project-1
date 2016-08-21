@@ -51,7 +51,7 @@ footer ul li {
 #score-block {
   height: 200px;
   width: 100px;
-  background: #4a3939;
+  background: #4a4141;
   border-radius: 10px;
   border: 10px ridge grey;
   box-shadow: 2px 2px #111;
@@ -113,7 +113,7 @@ footer ul li {
 #next-up {
   height: 200px;
   width: 100px;
-  background: #4a3939;
+  background: #4a4141;
   border-radius: 10px;
   border: 10px ridge grey;
   float: left;
@@ -130,6 +130,8 @@ footer ul li {
   text-align: center;
   font-size: 30px;
   text-shadow: 2px 2px #000;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 #next-up h3 {
@@ -147,5 +149,5 @@ footer ul li {
 }
 
 #game-buttons li {
-  display: inline
+  display: inline;
 }
