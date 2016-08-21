@@ -16,6 +16,8 @@ var $nextUpThree = $('#next-up-three');
 
 var $header = $('h1');
 
+var currentSpeed = 800;
+
 var score = 0;
 
 var lines = 0;
@@ -40,10 +42,20 @@ var isAtBottom = false;
 
 var intervalId;
 
+var isFirstLoad = true;
+
 function startTheGame(){
-  intervalId = setInterval(moveRowDown, 500);
+  updateInterval();
   updateTheBoard();
-  $('#intro-song').trigger('play');
+  if (isFirstLoad){
+    $('#intro-song').trigger('play');
+  }
+  isFirstLoad = false;
+}
+
+function updateInterval(){
+  currentSpeed *= 0.75;
+  intervalId = setInterval(moveRowDown, currentSpeed);
 }
 
 function gameOverCheck(){
@@ -106,6 +118,9 @@ function moveRowDown(){
 function newPiece(){
   gameOverCheck();
   score+= (5*level);
+  if (score >= (level*50)){
+    level++;
+  }
   for (var i = 0; i < 4; i++){
     $($squares)[currentLi + chosenOne.rotations[rotation][i]].value = 1;
   }
