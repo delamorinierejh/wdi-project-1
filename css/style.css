@@ -14,8 +14,8 @@ header {
   text-align: center;
   font-size: 36px;
   font-weight: 700;
-  text-shadow: 4px 4px #6f769c;
-  color: #f3ff3b;
+  text-shadow: 4px 4px #313d99;
+  color: #e4db6d;
 }
 
 main {
@@ -80,8 +80,9 @@ footer ul li {
 
 #score-block li p {
   line-height: 40px;
-  font-size: 25px;
+  font-size: 23px;
   text-shadow: 2px 2px #000;
+  color: gold;
 }
 
 #playing-grid {
