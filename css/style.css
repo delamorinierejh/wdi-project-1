@@ -1,10 +1,11 @@
 body {
   background: #080740;
-  background-image: url('../images/circuit_board.jpg');
+  background-image: url('../images/8-bit-background.png');
   background-size: cover;
   width: 640px;
   margin: 0 auto;
   font-family: 'Orbitron', sans-serif;
+  font-family: 'Press Start 2P', cursive;
   color: silver;
 }
 
@@ -43,9 +44,10 @@ footer ul {
 footer ul li {
   display: inline;
   text-align: center;
-  margin: 0 10px;
+  margin: 0 5px;
   line-height: 0px;
   text-shadow: 1px 1px #999;
+  font-size: 13px;
 }
 
 #score-block {
@@ -70,14 +72,15 @@ footer ul li {
 
 
 #score-block li h3{
-  padding-top: 5px;
+  padding-top: 2px;
   text-align: center;
   text-shadow: 2px 2px #000;
+  padding-bottom: 3px;
 }
 
 #score-block li p {
   line-height: 40px;
-  font-size: 30px;
+  font-size: 25px;
   text-shadow: 2px 2px #000;
 }
 
@@ -108,7 +111,7 @@ footer ul li {
   height: 22px;
   width: 22px;
   float: left;
-  border: 0.5px solid rgba(0,0,0,0.4);
+  border: 1px solid rgba(0,0,0,0.4);
 }
 
 #next-up {
@@ -143,15 +146,4 @@ footer ul li {
   padding-top: 5px;
   height: 20px;
   text-shadow: 2px 2px #000;
-}
-
-#game-buttons {
-  clear: both;
-  margin: 0 auto;
-  text-align: center;
-  height: 50px;
-}
-
-#game-buttons li {
-  display: inline;
 }

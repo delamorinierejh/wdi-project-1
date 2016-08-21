@@ -40,12 +40,14 @@ var gameActive = true;
 
 var isAtBottom = false;
 
-var intervalId;
+var timeoutId;
+
+var interval = 750;
 
 var isFirstLoad = true;
 
 function startTheGame(){
-  updateInterval();
+  goDown();
   updateTheBoard();
   if (isFirstLoad){
     $('#intro-song').trigger('play');
@@ -53,10 +55,17 @@ function startTheGame(){
   isFirstLoad = false;
 }
 
-function updateInterval(){
-  currentSpeed *= 0.75;
-  intervalId = setInterval(moveRowDown, currentSpeed);
-}
+function goDown() {
+   console.log( 'callback!' );
+   if (score >= (level*500)){
+   interval *= 0.8;
+   level++;
+   } 
+   timeoutId = setTimeout( goDown, interval );
+   moveRowDown();
+ }
+
+
 
 function gameOverCheck(){
   for (var i = 0; i < 10; i++){
@@ -68,7 +77,7 @@ function gameOverCheck(){
 
 function gameOverAlert(){
   $('#game-over-sound').trigger('play');
-  clearInterval(intervalId);
+  clearTimeout(timeoutId);
   $('body').off('keydown', letsRotate);
   $('body').off('keydown', rightMove);
   $('body').off('keydown', leftMove);
@@ -117,10 +126,7 @@ function moveRowDown(){
 
 function newPiece(){
   gameOverCheck();
-  score+= (5*level);
-  if (score >= (level*50)){
-    level++;
-  }
+  score+= (4 + level);
   for (var i = 0; i < 4; i++){
     $($squares)[currentLi + chosenOne.rotations[rotation][i]].value = 1;
   }
