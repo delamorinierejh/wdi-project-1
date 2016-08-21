@@ -62,7 +62,7 @@ footer ul li {
 }
 
 #score-block li {
-  height: 64px;
+  height: 66px;
   /*border: 1px solid black;*/
   list-style: none;
   text-align: center;
@@ -127,7 +127,7 @@ footer ul li {
 
 #next-up li{
   list-style: none;
-  height: 56px;
+  height: 58px;
   line-height: 56px;
   /*border: 1px solid black;*/
   text-align: center;
