@@ -197,7 +197,7 @@ function gameOverAlert(){
   $($modal).show();
   if (isHighScore){
     $modalHeading.html('GAME OVER');
-    $('#modal p').html('New High Score: ' + score);
+    $('#modal p').html('New High Score: ' + score + "!!!");
   } else {
   $modalHeading.html('GAME OVER');
   $('#modal p').html('Score: ' + score);
