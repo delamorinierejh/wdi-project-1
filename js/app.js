@@ -16,9 +16,11 @@ var $nextUpThree = $('#next-up-three');
 
 var $modal = $('#modal');
 
+var $modalHeading = $('#modal h2');
+
 var $header = $('h1');
 
-var paused = true;
+var paused = false;
 
 var currentSpeed = 800;
 
@@ -51,23 +53,53 @@ var interval = 750;
 var isFirstLoad = true;
 
 function startTheGame(){
-  paused = false;
-  setUpKeyboard();
-  $($modal).hide();
-  goDown();
-  updateTheBoard();
+  clearTheBoard();
+  paused = true;
+  resumeTheGame();
   if (isFirstLoad){
     $('#intro-song').trigger('play');
   }
   isFirstLoad = false;
 }
 
+function resumeTheGame(){
+  setUpKeyboard();
+  $($modal).hide();
+  paused = false;
+  goDown();
+  updateTheBoard();
+}
+
+function brandNewGame(){
+
+}
+
+///Escape key equals pause
+$(document).on('keydown', pauseTheGame);
+
+//start the game button 
+$('#new-game').on('click', startTheGame);
+
 function setUpKeyboard(){
   $(document).on('keydown', letsRotate);
   $(document).on('keydown', downMove);
   $(document).on('keydown', leftMove);
   $(document).on('keydown', rightMove);
-  $(document).on('keydown', pauseTheGame);
+}
+
+function disableKeyboard(){
+  $(document).off('keydown', letsRotate);
+  $(document).off('keydown', downMove);
+  $(document).off('keydown', leftMove);
+  $(document).off('keydown', rightMove);
+}
+
+function clearTheBoard(){
+  console.log('this is running');
+  for (var i = 0; i < 240; i++){
+    $($squares[i]).css('background', '');
+    $($squares)[i].value = 0;
+  }
 }
 
 function goDown() {
@@ -113,23 +145,33 @@ function pauseTheGame(e){
     if (!paused){
       paused = true;
       $($modal).show();
+      $modalHeading.html('GAME PAUSED');
+      $('#modal p').html('_________________________________');
+      $('#new-game').html('New Game');
+      $('#new-game').off('click', startTheGame);
+      $('#new-game').on('click', brandNewGame);
+      disableKeyboard();
     } else {
-      paused = false;
-      $($modal).hide();
-      goDown();
+      resumeTheGame();
     }
   }
 }
 
+function resumeTheGame(){
+  paused = false;
+  $($modal).hide();
+  goDown();
+  setUpKeyboard();
+}
+
 function moveRowDown(){
   if (currentLi + chosenOne.rotations[rotation][3] > 229){
-    newPiece();
+    newRound();
   }
   var iCanGoOn = true;
   for (var i = 0; i < 4; i++){
     var x = currentLi + 10 + chosenOne.rotations[rotation][i];
     if ($($squares)[x].value  == 1){
-      console.log('yes');
       iCanGoOn = false;
       break;
     }
@@ -146,36 +188,22 @@ function moveRowDown(){
       lightEmUp(chosenOne);
     }
   } else {
-    newPiece();
+    newRound();
   }
 
 }
 
-function newPiece(){
+function newRound(){
   gameOverCheck();
   score+= (4 + level);
-  for (var i = 0; i < 4; i++){
-    $($squares)[currentLi + chosenOne.rotations[rotation][i]].value = 1;
-  }
-  for (var k = 0; k < 24; k++){
-    var rowFilled = true;
-    for (var l = 0; l < 10; l++){
-      if ($($squares)[10*k+l].value != 1){
-        rowFilled = false;
-        continue;
-      }
-    }
-    if (rowFilled){
-      score += 100;
-      lines++;
-      $('#row-done').trigger('play');
-      for (var m = 0; m < 10; m++){
-        $($squares)[10*k+m].remove();
-        $($grid).prepend("<li class='squares' value='0'></li>");
-      }
-    }
-    $squares = $('.squares');
-  }
+  fillInBlocks();
+  checkForRow();
+  determineNewBlocks();
+  updateTheBoard();
+  lightEmUp(chosenOne);
+}
+
+function determineNewBlocks(){
   currentLi = Math.floor(Math.random()*3)+4;
   currentColumn = ('' + currentLi).split('')[('' + currentLi).split('').length -1];
   currentRow = 0;
@@ -184,8 +212,6 @@ function newPiece(){
   chosenThree = chosenFour;
   chosenFour = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
   rotations = 0;
-  updateTheBoard();
-  lightEmUp(chosenOne);
 }
 
   // OBJECTS FOR EACH OF THE SHAPES
@@ -287,9 +313,6 @@ function newPiece(){
   var chosenFour = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
 
 
-
-//start the game button 
-$('#new-game').on('click', startTheGame);
 
 //check for pause game
 $(document)
@@ -456,6 +479,30 @@ function letsRotate(e){
     }
   }
 
+  function  fillInBlocks(){
+    for (var i = 0; i < 4; i++){
+      $($squares)[currentLi + chosenOne.rotations[rotation][i]].value = 1;
+    }
+  }
 
-
-
+  function  checkForRow(){
+    for (var k = 0; k < 24; k++){
+      var rowFilled = true;
+      for (var l = 0; l < 10; l++){
+        if ($($squares)[10*k+l].value != 1){
+          rowFilled = false;
+          continue;
+        }
+      }
+      if (rowFilled){
+        score += 100;
+        lines++;
+        $('#row-done').trigger('play');
+        for (var m = 0; m < 10; m++){
+          $($squares)[10*k+m].remove();
+          $($grid).prepend("<li class='squares' value='0'></li>");
+        }
+      }
+    }
+    $squares = $('.squares');
+  }

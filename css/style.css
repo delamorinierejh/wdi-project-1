@@ -69,6 +69,10 @@ footer ul li {
     outline: 9999px solid rgba(0,0,0,0.5);
   }
 
+#modal:hover {
+  cursor: url(../images/tetris_pointer.png), pointer;
+}
+
 #modal h2 {
   margin-top: -55px;
   margin-bottom: -300px;
@@ -86,6 +90,7 @@ footer ul li {
 #modal-buttons{
   margin-top: -138px;
 }
+
 
 #modal button {
   width: 270px;
@@ -106,6 +111,7 @@ footer ul li {
 #modal button:hover {
   color: gold;
   border-color: orange;
+  cursor: url(../images/tetris_pointer.png), pointer;
 }
 
 input:focus,
