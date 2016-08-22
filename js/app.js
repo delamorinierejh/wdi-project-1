@@ -75,7 +75,6 @@ function resumeTheGame(){
 }
 
 function incrementStartingLevel(){
-  console.log('button works');
   level++;
   if (level === 6){
     level = 1;
