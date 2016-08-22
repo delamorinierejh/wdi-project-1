@@ -24,6 +24,15 @@ var paused = false;
 
 var score = 0;
 
+var highscore = localStorage.getItem("highscore");
+if(highscore !== null){
+ if (score > highscore) {
+  localStorage.setItem("highscore", score );
+}
+}else{
+  localStorage.setItem("highscore", score );
+}
+
 var lines = 0;
 
 var level = 1;
@@ -51,6 +60,8 @@ var interval;
 var isFirstLoad = true;
 
 var isMuted = false;
+
+var isHighScore = false;
 
 function startTheGame(){
   var holdLevel = level;
@@ -92,7 +103,9 @@ function brandNewGame(){
   clearTheBoard();
   $($modal).show();
   $modalHeading.html('BLOCK PARTY');
-  $('#modal p').html('A Tetris game by Johnnie de La Moriniere');
+  $header.html('MIND THE BLOCKS');
+  highscore = localStorage.getItem("highscore");
+  $('#modal p').html('High Score: ' + highscore);
   $('#new-game').html('Start Game');
   $('#new-game').off('click');
   $('#new-game').on('click', startTheGame);
@@ -116,6 +129,9 @@ $('#increment-level').on('click', incrementStartingLevel);
 
 //mute button
 $(document).on('keydown', muteSounds);
+
+//inserthighscore
+$('#blurb').html('High Score: ' + highscore);
 
 function setUpKeyboard(){
   $(document).on('keydown', pauseTheGame);
@@ -157,18 +173,35 @@ function goDown() {
 
 function gameOverCheck(){
   for (var i = 0; i < 10; i++){
-    if ($($squares)[20+i].value === 1){
-      gameOverAlert();
-    }
-  }
+    if ($($squares)[19+i].value === 1){
+      if(highscore !== null){
+        if (score > highscore) {
+         localStorage.setItem("highscore", score );
+         $('#high-score-sound').trigger('play');
+         isHighScore = true;
+       } else {
+          $('#game-over-sound').trigger('play');
+       }
+     }else{
+       localStorage.setItem("highscore", score );
+     }
+     gameOverAlert();
+     break;
+   }
+ }
 }
 
 function gameOverAlert(){
-  $('#game-over-sound').trigger('play');
+  paused = true;
   clearTimeout(timeoutId);
   $($modal).show();
+  if (isHighScore){
+    $modalHeading.html('GAME OVER');
+    $('#modal p').html('New High Score: ' + score);
+  } else {
   $modalHeading.html('GAME OVER');
-  $('#modal p').html('_________________________________');
+  $('#modal p').html('Score: ' + score);
+}
   $('#new-game').html('New Game');
   $('#new-game').off('click');
   $('#new-game').on('click', brandNewGame);
@@ -209,7 +242,6 @@ function pauseTheGame(e){
 function  muteSounds(e){
   if (e.keyCode == 77){
     if (!isMuted){
-      console.log('mute');
       var $audio = $('audio');
       for (var i = 0; i < $audio.length; i++) {
         $($audio)[i].muted = true;
@@ -217,7 +249,6 @@ function  muteSounds(e){
       isMuted = true;
       $('#mute-li').html('M:Unmute');
     } else {
-      console.log('unmute');
       var $audio = $('audio');
       for (var i = 0; i < $audio.length; i++) {
        $($audio)[i].muted = false;
