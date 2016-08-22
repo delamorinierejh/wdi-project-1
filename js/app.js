@@ -67,6 +67,7 @@ function setUpKeyboard(){
   $(document).on('keydown', downMove);
   $(document).on('keydown', leftMove);
   $(document).on('keydown', rightMove);
+  $(document).on('keydown', pauseTheGame);
 }
 
 function goDown() {
@@ -79,8 +80,6 @@ function goDown() {
    moveRowDown();
  }
 }
-
-
 
 function gameOverCheck(){
   for (var i = 0; i < 10; i++){
@@ -107,6 +106,19 @@ function updateTheBoard(){
   $($nextUpOne).css('background-image', 'url("' + chosenTwo.image + '")');
   $($nextUpTwo).css('background-image', 'url("' + chosenThree.image + '")');
   $($nextUpThree).css('background-image', 'url("' + chosenFour.image + '")');
+}
+
+function pauseTheGame(e){
+  if (e.keyCode == 27){
+    if (!paused){
+      paused = true;
+      $($modal).show();
+    } else {
+      paused = false;
+      $($modal).hide();
+      goDown();
+    }
+  }
 }
 
 function moveRowDown(){
