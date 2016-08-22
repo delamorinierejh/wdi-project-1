@@ -46,12 +46,15 @@ var isAtBottom = false;
 
 var timeoutId;
 
-var interval = 750 * (0.8 * (level-1));
+var interval;
 
 var isFirstLoad = true;
 
 function startTheGame(){
+  var holdLevel = level;
   clearTheBoard();
+  level = holdLevel;
+  interval = 750 * (Math.pow(0.8,(level-1)));
   determineNewBlocks();
   updateTheBoard();
   paused = true;
@@ -71,22 +74,24 @@ function resumeTheGame(){
 }
 
 function incrementStartingLevel(){
+  console.log('button works');
   level++;
   if (level === 6){
     level = 1;
   }
+  $('span').html(level);
 }
 
 function brandNewGame(){
   isFirstLoad = true;
   clearTheBoard();
-  interval = 750 * (0.8 * (level-1));
   $($modal).show();
   $modalHeading.html('MIND THE BLOCKS');
   $('#modal p').html('A Tetris game by Johnnie de La Moriniere');
   $('#new-game').html('Start Game');
   $('#new-game').off('click', brandNewGame);
   $('#new-game').on('click', startTheGame);
+  $('span').html(level);
 }
 
 ///Escape key equals pause
@@ -94,6 +99,9 @@ $(document).on('keydown', pauseTheGame);
 
 //start the game button 
 $('#new-game').on('click', startTheGame);
+
+//inrement the level button
+$('#increment-level').on('click', incrementStartingLevel);
 
 function setUpKeyboard(){
   $(document).on('keydown', letsRotate);
