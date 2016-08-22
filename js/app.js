@@ -66,15 +66,16 @@ function startTheGame(){
   isFirstLoad = false;
 }
 
-function resumeTheGame(){
-  setUpKeyboard();
-  $($modal).hide();
-  paused = false;
-  goDown();
-  updateTheBoard();
-}
+// function resumeTheGame(){
+//   setUpKeyboard();
+//   $($modal).hide();
+//   paused = false;
+//   goDown();
+//   updateTheBoard();
+// }
 
 function incrementStartingLevel(){
+  $('#blip').trigger('play');
   level++;
   if (level === 6){
     level = 1;
@@ -95,6 +96,7 @@ function brandNewGame(){
   $('#new-game').on('click', startTheGame);
   $('#increment-level').html('Starting level: <span>1</span>');
   $('span').html(level);
+  $('#increment-level').show();
   $('#increment-level').off('click');
   $('#increment-level').on('click', incrementStartingLevel);
 }
@@ -164,6 +166,7 @@ function gameOverAlert(){
   $('#new-game').on('click', brandNewGame);
   disableKeyboard();
   $header.html('GAME OVER');
+  $('#increment-level').hide();
 }
 
 function updateTheBoard(){
@@ -177,6 +180,7 @@ function updateTheBoard(){
 
 function pauseTheGame(e){
   if (e.keyCode == 27){
+    $('#blip').trigger('play');
     if (!paused){
       paused = true;
       $($modal).show();
@@ -197,6 +201,7 @@ function pauseTheGame(e){
 
 
 function resumeTheGame(){
+  $('#blip').trigger('play');
   paused = false;
   $($modal).hide();
   goDown();
@@ -249,7 +254,9 @@ function determineNewBlocks(){
   chosenOne = chosenTwo; 
   chosenTwo = chosenThree;
   chosenThree = chosenFour;
-  chosenFour = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
+  while (chosenFour === chosenThree){
+    chosenFour = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
+  }
   rotations = 0;
 }
 
