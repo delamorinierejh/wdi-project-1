@@ -59,6 +59,7 @@ function startTheGame(){
   updateTheBoard();
   paused = true;
   resumeTheGame();
+  $('#bloc-party').trigger('pause');
   if (isFirstLoad){
     $('#intro-song').trigger('play');
   }
@@ -83,19 +84,24 @@ function incrementStartingLevel(){
 }
 
 function brandNewGame(){
+  $('#bloc-party').load();
+  $('#bloc-party').trigger('play');
   isFirstLoad = true;
   clearTheBoard();
   $($modal).show();
   $modalHeading.html('MIND THE BLOCKS');
   $('#modal p').html('A Tetris game by Johnnie de La Moriniere');
   $('#new-game').html('Start Game');
-  $('#new-game').off('click', brandNewGame);
+  $('#new-game').off('click');
   $('#new-game').on('click', startTheGame);
+  $('#increment-level').html('Starting level: <span>1</span>');
   $('span').html(level);
+  $('#increment-level').off('click');
+  $('#increment-level').on('click', incrementStartingLevel);
 }
 
-///Escape key equals pause
-$(document).on('keydown', pauseTheGame);
+//Play Bloc Party on page load
+$('#bloc-party').trigger('play');
 
 //start the game button 
 $('#new-game').on('click', startTheGame);
@@ -104,6 +110,7 @@ $('#new-game').on('click', startTheGame);
 $('#increment-level').on('click', incrementStartingLevel);
 
 function setUpKeyboard(){
+  $(document).on('keydown', pauseTheGame);
   $(document).on('keydown', letsRotate);
   $(document).on('keydown', downMove);
   $(document).on('keydown', leftMove);
@@ -111,10 +118,7 @@ function setUpKeyboard(){
 }
 
 function disableKeyboard(){
-  $(document).off('keydown', letsRotate);
-  $(document).off('keydown', downMove);
-  $(document).off('keydown', leftMove);
-  $(document).off('keydown', rightMove);
+  $(document).off('keydown');
 }
 
 function clearTheBoard(){
@@ -135,6 +139,7 @@ function goDown() {
    if (score >= (level*500)){
      interval *= 0.8;
      level++;
+     updateTheBoard();
    } 
    timeoutId = setTimeout( goDown, interval );
    moveRowDown();
@@ -152,10 +157,13 @@ function gameOverCheck(){
 function gameOverAlert(){
   $('#game-over-sound').trigger('play');
   clearTimeout(timeoutId);
-  $('body').off('keydown', letsRotate);
-  $('body').off('keydown', rightMove);
-  $('body').off('keydown', leftMove);
-  $('body').off('keydown', downMove);
+  $($modal).show();
+  $modalHeading.html('GAME OVER');
+  $('#modal p').html('_________________________________');
+  $('#new-game').html('New Game');
+  $('#new-game').off('click');
+  $('#new-game').on('click', brandNewGame);
+  disableKeyboard();
   $header.html('GAME OVER');
 }
 
@@ -176,14 +184,18 @@ function pauseTheGame(e){
       $modalHeading.html('GAME PAUSED');
       $('#modal p').html('_________________________________');
       $('#new-game').html('New Game');
-      $('#new-game').off('click', startTheGame);
+      $('#new-game').off('click');
       $('#new-game').on('click', brandNewGame);
+      $('#increment-level').html('Resume Game');
+      $('#increment-level').off('click');
+      $('#increment-level').on('click', resumeTheGame);
       disableKeyboard();
     } else {
       resumeTheGame();
     }
   }
 }
+
 
 function resumeTheGame(){
   paused = false;
@@ -527,7 +539,7 @@ function letsRotate(e){
         lines++;
         $('#row-done').trigger('play');
         for (var m = 0; m < 10; m++){
-          $($squares)[10*k+m].remove();
+          $($squares[10*k+m]).remove();
           $($grid).prepend("<li class='squares' value='0'></li>");
         }
       }
