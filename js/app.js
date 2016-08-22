@@ -406,7 +406,7 @@ function determineNewBlocks(){
 
   
   //ARRAY TO SEE WHICH OBJECT TYPE TO PICK
-  var possibleShapes = [iShape, jShape, lShape, oShape, sShape, zShape, tShape,];
+  var possibleShapes = [iShape, jShape, lShape, oShape, sShape, zShape, tShape];
 
 
   // variables that choose the initial random shapes
