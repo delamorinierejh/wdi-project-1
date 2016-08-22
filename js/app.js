@@ -14,7 +14,11 @@ var $nextUpTwo = $('#next-up-two');
 
 var $nextUpThree = $('#next-up-three');
 
+var $modal = $('#modal');
+
 var $header = $('h1');
+
+var paused = true;
 
 var currentSpeed = 800;
 
@@ -47,6 +51,9 @@ var interval = 750;
 var isFirstLoad = true;
 
 function startTheGame(){
+  paused = false;
+  setUpKeyboard();
+  $($modal).hide();
   goDown();
   updateTheBoard();
   if (isFirstLoad){
@@ -55,15 +62,23 @@ function startTheGame(){
   isFirstLoad = false;
 }
 
+function setUpKeyboard(){
+  $(document).on('keydown', letsRotate);
+  $(document).on('keydown', downMove);
+  $(document).on('keydown', leftMove);
+  $(document).on('keydown', rightMove);
+}
+
 function goDown() {
-   console.log( 'callback!' );
+  if (!paused){
    if (score >= (level*500)){
-   interval *= 0.8;
-   level++;
+     interval *= 0.8;
+     level++;
    } 
    timeoutId = setTimeout( goDown, interval );
    moveRowDown();
  }
+}
 
 
 
@@ -168,11 +183,9 @@ function newPiece(){
     leftmost: [1,10,1,10],
     rightmost: [11,13,11,13],
     spaceAtBottom: [0,2,0,2],
-    blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftRight: [1,0,1,0],
     shiftLeft: [2,0,2,0],
     shiftUp: [0,2,0,2],
-    bottomSpace: [1,0,1,0],
     image: 'images/iShape.png'
   };
 
@@ -182,11 +195,9 @@ function newPiece(){
     leftmost: [1,10,20,0],
     rightmost: [2,12,1,12],
     spaceAtBottom: [1,1,1,2],
-    blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftRight: [1,0,0,0],
     shiftLeft: [0,0,1,0],
     shiftUp: [0,0,0,1],
-    bottomSpace: [0,0,0,0],
     image: 'images/jShape.png'
   };
 
@@ -196,11 +207,9 @@ function newPiece(){
     leftmost: [11,11,11,11],
     rightmost: [12,12,12,12],
     spaceAtBottom: [1,1,1,1],
-    blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftLeft: [0,0,0,0],
     shiftRight: [0,0,0,0],
     shiftUp: [0,0,0,0],
-    bottomSpace: [0,0,0,0],
     image: 'images/oShape.png'
   };
 
@@ -210,11 +219,9 @@ function newPiece(){
     leftmost: [0,10,1,10],
     rightmost: [1,12,22,12],
     spaceAtBottom: [1,2,1,1],
-    blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftLeft: [1,0,0,0],
     shiftRight: [0,0,1,0],
     shiftUp: [0,1,0,0],
-    bottomSpace: [0,0,0,0],
     image: 'images/lShape.png'
   };
 
@@ -224,11 +231,9 @@ function newPiece(){
     leftmost: [10,1,10,10],
     rightmost: [12,12,12,1],
     spaceAtBottom: [2,1,1,1],
-    blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftLeft: [0,0,0,1],
     shiftRight: [0,1,0,0],
     shiftUp: [1,0,0,0],
-    bottomSpace: [0,0,0,0],
     image: 'images/tShape.png'
   };
 
@@ -238,11 +243,9 @@ function newPiece(){
     leftmost: [10,0,10,0],
     rightmost: [1,12,1,12],
     spaceAtBottom: [1,2,1,2],
-    blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftLeft: [1,0,1,0],
     shiftRight: [0,0,0,0],
     shiftUp: [0,1,0,1],
-    bottomSpace: [0,0,0,0],
     image: 'images/zShape.png'
   };
 
@@ -251,12 +254,9 @@ function newPiece(){
     rotations: [[0,10,11,21],[1,2,10,11],[0,10,11,21],[1,2,10,11]],
     leftmost: [0,10,0,10],
     rightmost: [11,2,11,2],
-    spaceAtBottom: [1,2,1,2],
-    blocksExamined: [0,1,2,3,10,11,12,13,20,21,22,23,30,31,32,33],
     shiftLeft: [1,0,1,0],
     shiftRight: [0,0,0,0],
     shiftUp: [0,1,0,1],
-    bottomSpace: [0,0,0,0],
     image: 'images/sShape.png'
   };
 
@@ -265,7 +265,7 @@ function newPiece(){
   var possibleShapes = [iShape, jShape, lShape, oShape, sShape, zShape, tShape,];
 
 
-  // variable that choose the random shape
+  // variables that choose the initial random shapes
   var chosenOne = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
 
   var chosenTwo = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
@@ -274,16 +274,15 @@ function newPiece(){
 
   var chosenFour = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
 
-  //variables to determine how many blank spaces are natrually to the right and left of the shape within its 4x4 grid
-  var rightRemaining = chosenOne.rightmost[rotation];
 
-  var leftRemaining = chosenOne.leftmost[rotation];
 
-  var bottomRemaining = chosenOne.spaceAtBottom[rotation];
+//start the game button 
+$('#new-game').on('click', startTheGame);
 
+//check for pause game
+$(document)
 
 // rotation upbutton
-$('body').on('keydown', letsRotate);
 
 function letsRotate(e){
   if (e.keyCode == 38){
@@ -347,15 +346,6 @@ function letsRotate(e){
       if (rotation === 4){
         rotation = 0;
       }
-      currentColumn = ('' + currentLi).split('');
-      currentColumn = currentColumn[currentColumn.length-1];
-      // currentLi += chosenOne.shiftLeft[rotation];
-      // currentLi += chosenOne.shiftRight[rotation];
-      rightRemaining = chosenOne.rightmost[rotation];
-      leftRemaining = chosenOne.leftmost[rotation];
-      bottomRemaining = chosenOne.spaceAtBottom[rotation];
-      // chooseOne();
-      //var currentLi = Math.floor(Math.random()*5)+3;
       lightEmUp(chosenOne);
     }
   }
@@ -363,99 +353,90 @@ function letsRotate(e){
 
 
   // move down downbutton
-  $('body').on('keydown', downMove);
 
   function downMove(e){
-      if (e.keyCode == 40 && currentLi + chosenOne.rotations[rotation][3] < 230){
-        var iCanGoOn = true;
-        for (var i = 0; i < 4; i++){
-          var x = currentLi + 10 + chosenOne.rotations[rotation][i];
-          if ($($squares)[x].value  == 1){
-            iCanGoOn = false;
-            break;
-          }
-        }
-        if (iCanGoOn){
-          for (var i = 0; i < 4; i++){
-            if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
-              $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
-            }
-          }
-          previousLi = currentLi;
-          currentLi+= 10;
-          currentRow++;
-          lightEmUp(chosenOne);
+    if (e.keyCode == 40 && currentLi + chosenOne.rotations[rotation][3] < 230){
+      var iCanGoOn = true;
+      for (var i = 0; i < 4; i++){
+        var x = currentLi + 10 + chosenOne.rotations[rotation][i];
+        if ($($squares)[x].value  == 1){
+          iCanGoOn = false;
+          break;
         }
       }
+      if (iCanGoOn){
+        for (var i = 0; i < 4; i++){
+          if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
+            $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
+          }
+        }
+        previousLi = currentLi;
+        currentLi+= 10;
+        currentRow++;
+        lightEmUp(chosenOne);
+      }
     }
+  }
   
 
   // move  left button
-  $('body').on('keydown', leftMove);
 
   function leftMove(e){
-      if (e.keyCode == 37 && (currentLi + chosenOne.leftmost[rotation])%10 !== 0){
-        var iCanGoLeft = true;
-        for (var i = 0; i < 4; i++){
-          var x = currentLi - 1 + chosenOne.rotations[rotation][i];
-          if ($($squares)[x].value  == 1){
-            iCanGoLeft = false;
-            break;
-          }
-        }
-        if (iCanGoLeft){
-          for (var i = 0; i < 4; i++){
-            if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
-              $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
-            }
-          }
-          currentLi--;
-          lightEmUp(chosenOne);
+    if (e.keyCode == 37 && (currentLi + chosenOne.leftmost[rotation])%10 !== 0){
+      var iCanGoLeft = true;
+      for (var i = 0; i < 4; i++){
+        var x = currentLi - 1 + chosenOne.rotations[rotation][i];
+        if ($($squares)[x].value  == 1){
+          iCanGoLeft = false;
+          break;
         }
       }
+      if (iCanGoLeft){
+        for (var i = 0; i < 4; i++){
+          if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
+            $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
+          }
+        }
+        currentLi--;
+        lightEmUp(chosenOne);
+      }
     }
+  }
 
 
   // move right button
-  $('body').on('keydown', rightMove);
 
 
   function rightMove(e){
-      if (e.keyCode == 39 && ((currentLi + chosenOne.rightmost[rotation] + 1)%10 !==0)){
-        var iCanGoRight = true;
-        for (var i = 0; i < 4; i++){
-          var x = currentLi + 1 + chosenOne.rotations[rotation][i];
-          if ($($squares)[x].value  == 1){
-            iCanGoRight = false;
-            break;
-          }
-        }
-        if (iCanGoRight){
-          for (var i = 0; i < 4; i++){
-            if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
-              $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
-            }
-          }
-          previousLi = currentLi;
-          currentLi++;
-          lightEmUp(chosenOne);
+    if (e.keyCode == 39 && ((currentLi + chosenOne.rightmost[rotation] + 1)%10 !==0)){
+      var iCanGoRight = true;
+      for (var i = 0; i < 4; i++){
+        var x = currentLi + 1 + chosenOne.rotations[rotation][i];
+        if ($($squares)[x].value  == 1){
+          iCanGoRight = false;
+          break;
         }
       }
+      if (iCanGoRight){
+        for (var i = 0; i < 4; i++){
+          if ($($squares[currentLi + chosenOne.rotations[i]]).value != 1){
+            $($squares[currentLi + chosenOne.rotations[rotation][i]]).css('background', '');
+          }
+        }
+        previousLi = currentLi;
+        currentLi++;
+        lightEmUp(chosenOne);
+      }
     }
+  }
 
   //the function to rerender the grid so that it is correctly lit up
   function lightEmUp(shape){
     if (currentColumn == -1){currentColumn = 9};
     currentColumn = ('' + currentLi).split('');
     currentColumn = currentColumn[currentColumn.length-1];
-    // for (var i = 0; i < 4; i++) {
-    //   if ($($squares[previousLi + shape.rotations[i]]).value != 1){
-    //     $($squares[currentLi + shape.blocksExamined[i]]).css('background', '');
-    //   }
-    // }
     for (var i = 0; i < 4; i++){
       if ($($squares[currentLi + shape.rotations[i]]).value != 1){
-        // $($squares[currentLi + shape.rotations[rotation][i]]).css('background-color', shape.colour);
         $($squares[currentLi + shape.rotations[rotation][i]]).css({
           background: "radial-gradient(" + shape.colour + ", #555)" 
         });
@@ -463,7 +444,6 @@ function letsRotate(e){
     }
   }
 
-  startTheGame();
 
 
 

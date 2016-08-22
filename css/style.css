@@ -50,6 +50,72 @@ footer ul li {
   font-size: 13px;
 }
 
+
+#modal {
+  position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 620px;
+    line-height: 200px;
+    height: 200px;
+    margin-left: -320px;
+    margin-top: -120px;
+    background-color: #4a4141;
+    text-align: center;
+    border: 10px ridge #182c9d;
+    border-radius: 20px;
+    /* needed styles for the overlay */
+    z-index: 10; /* keep on top of other elements on the page */
+    outline: 9999px solid rgba(0,0,0,0.5);
+  }
+
+#modal h2 {
+  margin-top: -55px;
+  margin-bottom: -300px;
+  font-size: 30px;
+  text-shadow: 3px 3px #526db9;
+  color: #dde339;
+}
+
+#modal p {
+  font-size: 12px;
+  text-shadow: 2px 2px black;
+  margin-top: 135px;
+}
+
+#modal-buttons{
+  margin-top: -138px;
+}
+
+#modal button {
+  width: 270px;
+  height: 50px;
+  margin: 0 10px;
+  border: 4px ridge #2196f3;
+  border-radius: 20px;
+  font-family: 'Press Start 2P', cursive;
+  background: -webkit-linear-gradient(#050546, #26248e, #050546); 
+  background: -o-linear-gradient(#050546, #26248e, #050546);
+  background: -moz-linear-gradient(#050546, #26248e, #050546); 
+  background: linear-gradient(#050546, #26248e, #050546);
+  color: #ef7d36;
+  font-size: 14px;
+  text-shadow: 2px 2px #853d3d;
+}
+
+#modal button:hover {
+  color: gold;
+  border-color: orange;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+
 #score-block {
   padding-top: 12px;
   height: 200px;
