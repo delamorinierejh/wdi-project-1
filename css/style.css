@@ -46,10 +46,17 @@ footer ul li {
   text-align: center;
   margin: 0 5px;
   line-height: 0px;
-  text-shadow: 1px 1px #999;
+  text-shadow: 2px 2px #673ab7;
   font-size: 13px;
 }
 
+strong {
+  font-size: 20px;
+}
+
+em {
+  font-size: 34px;
+}
 
 #modal {
   position: fixed;
