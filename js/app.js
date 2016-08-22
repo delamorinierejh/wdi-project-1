@@ -50,6 +50,8 @@ var interval;
 
 var isFirstLoad = true;
 
+var isMuted = false;
+
 function startTheGame(){
   var holdLevel = level;
   clearTheBoard();
@@ -89,7 +91,7 @@ function brandNewGame(){
   isFirstLoad = true;
   clearTheBoard();
   $($modal).show();
-  $modalHeading.html('MIND THE BLOCKS');
+  $modalHeading.html('BLOCK PARTY');
   $('#modal p').html('A Tetris game by Johnnie de La Moriniere');
   $('#new-game').html('Start Game');
   $('#new-game').off('click');
@@ -101,6 +103,8 @@ function brandNewGame(){
   $('#increment-level').on('click', incrementStartingLevel);
 }
 
+
+//LOAD TIME EVENT LISTENERS
 //Play Bloc Party on page load
 $('#bloc-party').trigger('play');
 
@@ -109,6 +113,9 @@ $('#new-game').on('click', startTheGame);
 
 //inrement the level button
 $('#increment-level').on('click', incrementStartingLevel);
+
+//mute button
+$(document).on('keydown', muteSounds);
 
 function setUpKeyboard(){
   $(document).on('keydown', pauseTheGame);
@@ -120,6 +127,7 @@ function setUpKeyboard(){
 
 function disableKeyboard(){
   $(document).off('keydown');
+  $(document).on('keydown', muteSounds);
 }
 
 function clearTheBoard(){
@@ -137,13 +145,13 @@ function clearTheBoard(){
 
 function goDown() {
   if (!paused){
-   if (score >= (level*500)){
+    moveRowDown();
+    if (score >= (level*500)){
      interval *= 0.8;
      level++;
      updateTheBoard();
    } 
    timeoutId = setTimeout( goDown, interval );
-   moveRowDown();
  }
 }
 
@@ -182,6 +190,7 @@ function pauseTheGame(e){
   if (e.keyCode == 27){
     $('#blip').trigger('play');
     if (!paused){
+      clearTimeout(timeoutId);
       paused = true;
       $($modal).show();
       $modalHeading.html('GAME PAUSED');
@@ -193,10 +202,30 @@ function pauseTheGame(e){
       $('#increment-level').off('click');
       $('#increment-level').on('click', resumeTheGame);
       disableKeyboard();
-    } else {
-      resumeTheGame();
-    }
+    } 
   }
+}
+
+function  muteSounds(e){
+  if (e.keyCode == 77){
+    if (!isMuted){
+      console.log('mute');
+      var $audio = $('audio');
+      for (var i = 0; i < $audio.length; i++) {
+        $($audio)[i].muted = true;
+      }
+      isMuted = true;
+      $('#mute-li').html('M:Unmute');
+    } else {
+      console.log('unmute');
+      var $audio = $('audio');
+      for (var i = 0; i < $audio.length; i++) {
+       $($audio)[i].muted = false;
+     }
+     isMuted = false;
+     $('#mute-li').html('M:Mute');
+   }
+ }
 }
 
 
