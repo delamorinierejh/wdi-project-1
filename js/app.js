@@ -22,8 +22,6 @@ var $header = $('h1');
 
 var paused = false;
 
-var currentSpeed = 800;
-
 var score = 0;
 
 var lines = 0;
@@ -48,12 +46,14 @@ var isAtBottom = false;
 
 var timeoutId;
 
-var interval = 750;
+var interval = 750 * (0.8 * (level-1));
 
 var isFirstLoad = true;
 
 function startTheGame(){
   clearTheBoard();
+  determineNewBlocks();
+  updateTheBoard();
   paused = true;
   resumeTheGame();
   if (isFirstLoad){
@@ -70,8 +70,23 @@ function resumeTheGame(){
   updateTheBoard();
 }
 
-function brandNewGame(){
+function incrementStartingLevel(){
+  level++;
+  if (level === 6){
+    level = 1;
+  }
+}
 
+function brandNewGame(){
+  isFirstLoad = true;
+  clearTheBoard();
+  interval = 750 * (0.8 * (level-1));
+  $($modal).show();
+  $modalHeading.html('MIND THE BLOCKS');
+  $('#modal p').html('A Tetris game by Johnnie de La Moriniere');
+  $('#new-game').html('Start Game');
+  $('#new-game').off('click', brandNewGame);
+  $('#new-game').on('click', startTheGame);
 }
 
 ///Escape key equals pause
@@ -95,11 +110,16 @@ function disableKeyboard(){
 }
 
 function clearTheBoard(){
-  console.log('this is running');
   for (var i = 0; i < 240; i++){
     $($squares[i]).css('background', '');
-    $($squares)[i].value = 0;
+    $($squares)[i].value = 0; 
   }
+  score = 0;
+  lines = 0;
+  level = 1;
+  $($scoreBoard).html(score);
+  $($lineBoard).html(lines);
+  $($levelBoard).html(level);
 }
 
 function goDown() {
