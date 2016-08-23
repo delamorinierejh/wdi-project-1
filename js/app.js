@@ -314,6 +314,7 @@ Tetris.gameOverCheck = function(){
 
 // the function that is called when the game over check has signalled the end of the game
 Tetris.gameOverAlert = function(){
+  $('#bloc-party').trigger('pause');
   this.paused = true;
   clearTimeout(this.timeoutId);
   $(this.$modal).show();

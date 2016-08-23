@@ -5,7 +5,7 @@ body {
   width: 660px;
   margin: 0 auto;
   font-family: 'Press Start 2P', cursive;
-  color: silver;
+  color: #d8d8d8;
 }
 
 header {
@@ -83,13 +83,14 @@ em {
   margin-top: -60px;
   margin-bottom: -287px;
   font-size: 80px;
-  text-shadow: 3px 3px #526db9;
+  text-shadow: 3px 3px #970ac5;
   color: #dee339;
 }
 
 #modal p {
   font-size: 16px;
-  text-shadow: 2px 2px black;
+  text-shadow: 2px 2px #970ac5;
+  color: #cdf3ff;
   margin-top: 147px;
 }
 
