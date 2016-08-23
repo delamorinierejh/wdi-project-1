@@ -242,7 +242,6 @@ Tetris.moveRowDown = function(){
   var iCanGoOn = true;
   for (var i = 0; i < 4; i++){
     var x = this.currentLi + 10 + this.chosenOne.rotations[this.rotation][i];
-    console.log(x);
     if ($(this.$squares)[x].value  == 1){
       iCanGoOn = false;
       break;
