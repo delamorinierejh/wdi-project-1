@@ -458,6 +458,7 @@ Tetris.letsRotate = function(e){
     }
     //performs rotation, with shifts depending on piece in play
     if (iCanRotate){
+      $('#laser').trigger('play');
       for (var i = 0; i < 4; i++) {
         $(this.$squares[this.currentLi + this.chosenOne.rotations[this.rotation][i]]).css('background', '');
       }
