@@ -1,35 +1,36 @@
+
 var Tetris = Tetris || {};
 
-$(Tetris.setup);
-
 Tetris.setup = function(){
-  Tetris.$squares = $('.squares');
 
-  Tetris.$grid = $('#grid-ul');
+  this.$squares = $('.squares');
 
-  Tetris.$scoreBoard = $('#score-count');
+  this.$grid = $('#grid-ul');
 
-  Tetris.$lineBoard = $('#lines-count');
+  this.$scoreBoard = $('#score-count');
 
-  Tetris.$levelBoard = $('#level-count');
+  this.$lineBoard = $('#lines-count');
 
-  Tetris.$nextUpOne = $('#next-up-one');
+  this.$levelBoard = $('#level-count');
 
-  Tetris.$nextUpTwo = $('#next-up-two');
+  this.$nextUpOne = $('#next-up-one');
 
-  Tetris.$nextUpThree = $('#next-up-three');
+  this.$nextUpTwo = $('#next-up-two');
 
-  Tetris.$modal = $('#modal');
+  this.$nextUpThree = $('#next-up-three');
 
-  Tetris.$modalHeading = $('#modal h2');
+  this.$modal = $('#modal');
 
-  Tetris.$header = $('h1');
+  this.$modalHeading = $('#modal h2');
 
-  Tetris.paused = false;
+  this.$header = $('h1');
 
-  Tetris.score = 0;
+  this.paused = false;
 
-  Tetris.highscore = localStorage.getItem("highscore");
+  this.score = 0;
+
+  this.highscore = localStorage.getItem("highscore");
+  
   if(this.highscore !== null){
    if (this.score > this.highscore) {
     localStorage.setItem("highscore", this.score );
@@ -38,38 +39,54 @@ Tetris.setup = function(){
     localStorage.setItem("highscore", this.score );
   }
 
-  Tetris.lines = 0;
+  this.lines = 0;
 
-  Tetris.level = 1;
+  this.level = 1;
 
   //setting the rotation to 0 initally so that first rotation for each shape is chosen on load
-  Tetris.rotation = 0;
+  this.rotation = 0;
 
   //randomly selected starting element
-  Tetris.currentLi = Math.floor(Math.random()*3)+14;
+  this.currentLi = Math.floor(Math.random()*3)+14;
 
-  Tetris.previousLi;
+  this.previousLi;
 
-  Tetris.currentColumn = ('' + currentLi).split('')[('' + currentLi).split('').length -1];
+  this.currentColumn = ('' + this.currentLi).split('')[('' + this.currentLi).split('').length -1];
 
-  Tetris.currentRow = 0;
+  this.currentRow = 0;
 
-  Tetris.gameActive = true;
+  this.gameActive = true;
 
-  Tetris.isAtBottom = false;
+  this.isAtBottom = false;
 
-  Tetris.timeoutId;
+  this.timeoutId;
 
-  Tetris.interval;
+  this.interval;
 
-  Tetris.isFirstLoad = true;
+  this.isFirstLoad = true;
 
-  Tetris.isMuted = false;
+  this.isMuted = false;
 
-  Tetris.isHighScore = false;
+  this.isHighScore = false;
+
+  //LOAD TIME EVENT LISTENERS
+  //Play Bloc Party on page load
+  $('#bloc-party').trigger('play');
+
+  //start the game button 
+  $('#new-game').on('click', Tetris.startTheGame.bind(Tetris));
+
+  //inrement the level button
+  $('#increment-level').on('click', Tetris.incrementStartingLevel.bind(Tetris));
+
+  //mute button
+  $(document).on('keydown', Tetris.muteSounds.bind(Tetris));
+
+  //inserthighscore
+  $('#blurb').html('High Score: ' + Tetris.highscore);
 
   // OBJECTS FOR EACH OF THE SHAPES
-  Tetris.iShape = {
+  this.iShape = {
     colour: '#F9C80E',
     rotations: [[1,11,21,31],[10,11,12,13],[1,11,21,31],[10,11,12,13]],
     leftmost: [1,10,1,10],
@@ -81,7 +98,7 @@ Tetris.setup = function(){
     image: 'images/iShape.png'
   };
 
-  Tetris.jShape = {
+  this.jShape = {
     colour: '#70D6FF',
     rotations: [[1,2,11,21],[10,11,12,22],[1,11,20,21],[0,10,11,12]],
     leftmost: [1,10,20,0],
@@ -93,7 +110,7 @@ Tetris.setup = function(){
     image: 'images/jShape.png'
   };
 
-  Tetris.oShape = {
+  this.oShape = {
     colour: '#FC440F',
     rotations: [[11,12,21,22],[11,12,21,22],[11,12,21,22],[11,12,21,22]],
     leftmost: [11,11,11,11],
@@ -105,7 +122,7 @@ Tetris.setup = function(){
     image: 'images/oShape.png'
   };
 
-  Tetris.lShape = {
+  this.lShape = {
     colour: '#4AFF05',
     rotations: [[0,1,11,21],[2,10,11,12],[1,11,21,22],[10,11,12,20]],
     leftmost: [0,10,1,10],
@@ -117,7 +134,7 @@ Tetris.setup = function(){
     image: 'images/lShape.png'
   };
 
-  Tetris.tShape = {
+  this.tShape = {
     colour: '#FF9800',
     rotations: [[1,10,11,12],[1,11,12,21],[10,11,12,21],[1,10,11,21]],
     leftmost: [10,1,10,10],
@@ -129,7 +146,7 @@ Tetris.setup = function(){
     image: 'images/tShape.png'
   };
 
-  Tetris.zShape = {
+  this.zShape = {
     colour: '#DD38FF',
     rotations: [[1,10,11,20],[0,1,11,12],[1,10,11,20],[0,1,11,12]],
     leftmost: [10,0,10,0],
@@ -141,7 +158,7 @@ Tetris.setup = function(){
     image: 'images/zShape.png'
   };
 
-  Tetris.sShape = {
+  this.sShape = {
     colour: '#44FFE9',
     rotations: [[0,10,11,21],[1,2,10,11],[0,10,11,21],[1,2,10,11]],
     leftmost: [0,10,0,10],
@@ -151,42 +168,30 @@ Tetris.setup = function(){
     shiftUp: [0,1,0,1],
     image: 'images/sShape.png'
   };
+
   
   //ARRAY TO SEE WHICH OBJECT TYPE TO PICK
-  Tetris.possibleShapes = [iShape, jShape, lShape, oShape, sShape, zShape, tShape];
+  this.possibleShapes = [this.iShape, this.jShape, this.lShape, this.oShape, this.sShape, this.zShape, this.tShape];
 
 
   // variables that choose the initial random shapes
-  Tetris.chosenOne = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
+  this.chosenOne = this.possibleShapes[Math.floor(Math.random()*this.possibleShapes.length)];
 
-  Tetris.chosenTwo = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
+  this.chosenTwo = this.possibleShapes[Math.floor(Math.random()*this.possibleShapes.length)];
 
-  Tetris.chosenThree = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
+  this.chosenThree = this.possibleShapes[Math.floor(Math.random()*this.possibleShapes.length)];
 
-  Tetris.chosenFour = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
+  this.chosenFour = this.possibleShapes[Math.floor(Math.random()*this.possibleShapes.length)];
 
-  $('#bloc-party').trigger('play');
-
-  //start the game button 
-  $('#new-game').on('click', Tetris.startTheGame.bind(this));
-
-  //inrement the level button
-  $('#increment-level').on('click', Tetris.incrementStartingLevel.bind(this));
-
-  //mute button
-  $(document).on('keydown', Tetris.muteSounds.bind(this));
-
-  //inserthighscore
-  $('#blurb').html('High Score: ' + Tetris.highscore);
 
 }
 
 
 Tetris.startTheGame = function(){
-  var holdLevel = level;
+  var holdLevel = this.level;
   this.clearTheBoard();
-  level = holdLevel;
-  this.interval = 750 * (Math.pow(0.8,(level-1)));
+  this.level = holdLevel;
+  this.interval = 750 * (Math.pow(0.8,(this.level-1)));
   this.determineNewBlocks();
   this.updateTheBoard();
   this.paused = true;
@@ -198,14 +203,13 @@ Tetris.startTheGame = function(){
   this.isFirstLoad = false;
 }
 
-
 Tetris.incrementStartingLevel = function(){
   $('#blip').trigger('play');
   this.level++;
   if (this.level === 6){
     this.level = 1;
   }
-  $('span').html(level);
+  $('span').html(this.level);
 }
 
 Tetris.brandNewGame = function(){
@@ -213,10 +217,10 @@ Tetris.brandNewGame = function(){
   $('#bloc-party').trigger('play');
   this.isFirstLoad = true;
   this.clearTheBoard();
-  $($modal).show();
+  $(this.$modal).show();
   this.$modalHeading.html('BLOCK PARTY');
   this.$header.html('MIND THE BLOCKS');
-  this.highscore = this.localStorage.getItem("highscore");
+  this.highscore = localStorage.getItem("highscore");
   $('#modal p').html('High Score: ' + this.highscore);
   $('#new-game').html('Start Game');
   $('#new-game').off('click');
@@ -257,18 +261,18 @@ Tetris.clearTheBoard = function(){
 
 Tetris.goDown = function() {
   if (!this.paused){
-    moveRowDown();
+    this.moveRowDown();
     if (this.score >= (this.level*500)){
      this.interval *= 0.8;
      this.level++;
      this.updateTheBoard();
    } 
-   this.timeoutId = setTimeout( this.goDown, this.interval );
+   this.timeoutId = setTimeout( this.goDown.bind(Tetris), this.interval );
  }
 }
 
 Tetris.gameOverCheck = function(){
-  for (Tetris.i = 0; i < 10; i++){
+  for (var i = 0; i < 10; i++){
     if ($(this.$squares)[19+i].value === 1){
       if(this.highscore !== null){
         if (this.score > this.highscore) {
@@ -276,28 +280,28 @@ Tetris.gameOverCheck = function(){
          $('#high-score-sound').trigger('play');
          this.isHighScore = true;
        } else {
-          $('#game-over-sound').trigger('play');
-       }
-     }else{
-       localStorage.setItem("highscore", this.score );
-     }
-     this.gameOverAlert();
-     break;
+        $('#game-over-sound').trigger('play');
+      }
+    }else{
+     localStorage.setItem("highscore", this.score );
    }
+   this.gameOverAlert();
+   break;
  }
+}
 }
 
 Tetris.gameOverAlert = function(){
   this.paused = true;
   clearTimeout(this.timeoutId);
-  $($modal).show();
+  $(this.$modal).show();
   if (this.isHighScore){
     this.$modalHeading.html('GAME OVER');
     $('#modal p').html('New High Score: ' + this.score + "!!!");
   } else {
-  this.$modalHeading.html('GAME OVER');
-  $('#modal p').html('Score: ' + this.score);
-}
+    this.$modalHeading.html('GAME OVER');
+    $('#modal p').html('Score: ' + this.score);
+  }
   $('#new-game').html('New Game');
   $('#new-game').off('click');
   $('#new-game').on('click', this.brandNewGame.bind(this));
@@ -307,26 +311,26 @@ Tetris.gameOverAlert = function(){
 }
 
 Tetris.updateTheBoard = function(){
-  $($scoreBoard).html(this.score);
-  $($lineBoard).html(this.lines);
-  $($levelBoard).html(this.level);
-  $($nextUpOne).css('background-image', 'url("' + this.chosenTwo.image + '")');
-  $($nextUpTwo).css('background-image', 'url("' + this.chosenThree.image + '")');
-  $($nextUpThree).css('background-image', 'url("' + this.chosenFour.image + '")');
+  $(this.$scoreBoard).html(this.score);
+  $(this.$lineBoard).html(this.lines);
+  $(this.$levelBoard).html(this.level);
+  $(this.$nextUpOne).css('background-image', 'url("' + this.chosenTwo.image + '")');
+  $(this.$nextUpTwo).css('background-image', 'url("' + this.chosenThree.image + '")');
+  $(this.$nextUpThree).css('background-image', 'url("' + this.chosenFour.image + '")');
 }
 
 Tetris.pauseTheGame = function(e){
   if (e.keyCode == 27){
     $('#blip').trigger('play');
     if (!this.paused){
-      this.clearTimeout(this.timeoutId);
+      clearTimeout(this.timeoutId);
       this.paused = true;
       $(this.$modal).show();
       this.$modalHeading.html('GAME PAUSED');
       $('#modal p').html('_________________________________');
       $('#new-game').html('New Game');
       $('#new-game').off('click');
-      $('#new-game').on('click', this.brandNewGame);
+      $('#new-game').on('click', this.brandNewGame.bind(this));
       $('#increment-level').html('Resume Game');
       $('#increment-level').off('click');
       $('#increment-level').on('click', this.resumeTheGame.bind(this));
@@ -335,7 +339,7 @@ Tetris.pauseTheGame = function(e){
   }
 }
 
-Tetris. muteSounds = function(e){
+Tetris.muteSounds = function(e){
   if (e.keyCode == 77){
     if (!this.isMuted){
       var $audio = $('audio');
@@ -365,12 +369,13 @@ Tetris.resumeTheGame = function(){
 }
 
 Tetris.moveRowDown = function(){
-  if (this.currentLi + this.chosenOne.rotations[rotation][3] > 229){
+  if (this.currentLi + this.chosenOne.rotations[this.rotation][3] > 229){
     this.newRound();
   }
-var iCanGoOn = true;
+  var iCanGoOn = true;
   for (var i = 0; i < 4; i++){
     var x = this.currentLi + 10 + this.chosenOne.rotations[this.rotation][i];
+    console.log(x);
     if ($(this.$squares)[x].value  == 1){
       iCanGoOn = false;
       break;
@@ -413,7 +418,7 @@ Tetris.determineNewBlocks = function(){
   while (this.chosenFour === this.chosenThree){
     this.chosenFour = this.possibleShapes[Math.floor(Math.random()*this.possibleShapes.length)];
   }
-  this.rotations = 0;
+  this.rotation = 0;
 }
 
 
@@ -436,44 +441,44 @@ Tetris.letsRotate = function(e){
     }
     if (iCanRotate){
       for (var i = 0; i < 4; i++) {
-        $(this.$squares[currentLi + this.chosenOne.rotations[this.rotation][i]]).css('background', '');
+        $(this.$squares[this.currentLi + this.chosenOne.rotations[this.rotation][i]]).css('background', '');
       }
       if (this.rotation === 4){
         this.rotation = 0; 
       }
-      if (this.chosenOne.shiftRight[rotation] == 1 && this.currentColumn == 1){
+      if (this.chosenOne.shiftRight[this.rotation] == 1 && this.currentColumn == 1){
         this.currentLi +=1;
         this.currentColumn++;
       }
-      if (this.chosenOne.shiftRight[rotation] == 1 && this.currentColumn == 9){
+      if (this.chosenOne.shiftRight[this.rotation] == 1 && this.currentColumn == 9){
         this.currentLi +=1;
         this.currentColumn++;
       }
-      if (this.chosenOne.shiftRight[rotation] == 2 && this.currentColumn == 0){
+      if (this.chosenOne.shiftRight[this.rotation] == 2 && this.currentColumn == 0){
         this.currentLi +=1;
         this.currentColumn++;
       }
-      if (this.chosenOne.shiftLeft[rotation] == 1 && this.currentColumn == 8){
+      if (this.chosenOne.shiftLeft[this.rotation] == 1 && this.currentColumn == 8){
         this.currentLi -=1;
         this.currentColumn--;
       }
-      if (this.chosenOne.shiftLeft[rotation] == 2 && this.currentColumn == 8){
+      if (this.chosenOne.shiftLeft[this.rotation] == 2 && this.currentColumn == 8){
         this.currentLi -=2;
         this.currentColumn-=2;
       }
-      if (this.chosenOne.shiftLeft[rotation] == 2 && this.currentColumn == 7){
+      if (this.chosenOne.shiftLeft[this.rotation] == 2 && this.currentColumn == 7){
         this.currentLi -=1;
         this.currentColumn--;
       }
-      if (this.chosenOne.shiftUp[rotation] == 1 && this.currentRow == 22){
+      if (this.chosenOne.shiftUp[this.rotation] == 1 && this.currentRow == 22){
         this.currentLi -=10;
         this.currentRow--;
       }
-      if (this.chosenOne.shiftUp[rotation] == 2 && this.currentRow > 21){
+      if (this.chosenOne.shiftUp[this.rotation] == 2 && this.currentRow > 21){
         this.currentLi -=20;
         this.currentRow-=2;
       }
-      if (this.chosenOne.shiftUp[rotation] == 2 && this.currentRow == 21){
+      if (this.chosenOne.shiftUp[this.rotation] == 2 && this.currentRow == 21){
         this.currentLi -=10;
         this.currentRow--;
       }
@@ -489,13 +494,13 @@ Tetris.letsRotate = function(e){
 
   // move down downbutton
 
-  Tetris.downMove = function(e){
+Tetris.downMove = function(e){
     if (e.keyCode == 40 && this.currentLi + this.chosenOne.rotations[this.rotation][3] < 230){
       var iCanGoOn = true;
       for (var i = 0; i < 4; i++){
         var x = this.currentLi + 10 + this.chosenOne.rotations[this.rotation][i];
         if ($(this.$squares)[x].value  == 1){
-          this.iCanGoOn = false;
+          iCanGoOn = false;
           break;
         }
       }
@@ -505,7 +510,7 @@ Tetris.letsRotate = function(e){
             $(this.$squares[this.currentLi + this.chosenOne.rotations[this.rotation][i]]).css('background', '');
           }
         }
-        this.previousLi = currentLi;
+        this.previousLi = this.currentLi;
         this.currentLi+= 10;
         this.currentRow++;
         this.lightEmUp(this.chosenOne);
@@ -516,11 +521,11 @@ Tetris.letsRotate = function(e){
 
   // move  left button
 
-  Tetris.leftMove = function(e){
+Tetris.leftMove = function(e){
     if (e.keyCode == 37 && (this.currentLi + this.chosenOne.leftmost[this.rotation])%10 !== 0){
       var iCanGoLeft = true;
       for (var i = 0; i < 4; i++){
-        var x = currentLi - 1 + this.chosenOne.rotations[this.rotation][i];
+        var x = this.currentLi - 1 + this.chosenOne.rotations[this.rotation][i];
         if ($(this.$squares)[x].value  == 1){
           iCanGoLeft = false;
           break;
@@ -528,8 +533,8 @@ Tetris.letsRotate = function(e){
       }
       if (iCanGoLeft){
         for (var i = 0; i < 4; i++){
-          if ($(this.$squares[currentLi + this.chosenOne.rotations[i]]).value != 1){
-            $(this.$squares[currentLi + this.chosenOne.rotations[this.rotation][i]]).css('background', '');
+          if ($(this.$squares[this.currentLi + this.chosenOne.rotations[i]]).value != 1){
+            $(this.$squares[this.currentLi + this.chosenOne.rotations[this.rotation][i]]).css('background', '');
           }
         }
         this.currentLi--;
@@ -542,7 +547,7 @@ Tetris.letsRotate = function(e){
   // move right button
 
 
-  Tetris.rightMove = function(e){
+Tetris.rightMove = function(e){
     if (e.keyCode == 39 && ((this.currentLi + this.chosenOne.rightmost[this.rotation] + 1)%10 !==0)){
       var iCanGoRight = true;
       for (var i = 0; i < 4; i++){
@@ -554,8 +559,8 @@ Tetris.letsRotate = function(e){
       }
       if (iCanGoRight){
         for (var i = 0; i < 4; i++){
-          if ($(this.$squares[currentLi + this.chosenOne.rotations[i]]).value != 1){
-            $(this.$squares[currentLi + this.chosenOne.rotations[this.rotation][i]]).css('background', '');
+          if ($(this.$squares[this.currentLi + this.chosenOne.rotations[i]]).value != 1){
+            $(this.$squares[this.currentLi + this.chosenOne.rotations[this.rotation][i]]).css('background', '');
           }
         }
         this.previousLi = this.currentLi;
@@ -565,32 +570,32 @@ Tetris.letsRotate = function(e){
     }
   }
 
-  //the Tetris.to rerender the grid so that it is correctly lit up
-  Tetris.lightEmUp = function(shape){
+  //the function to rerender the grid so that it is correctly lit up
+Tetris.lightEmUp = function(shape){
     if (this.currentColumn == -1){this.currentColumn = 9};
     this.currentColumn = ('' + this.currentLi).split('');
-    this.currentColumn = this.currentColumn[currentColumn.length-1];
+    this.currentColumn = this.currentColumn[this.currentColumn.length-1];
     for (var i = 0; i < 4; i++){
-      if ($(this.$squares[currentLi + shape.rotations[i]]).value != 1){
-        $(this.$squares[currentLi + shape.rotations[this.rotation][i]]).css({
+      if ($(this.$squares[this.currentLi + shape.rotations[i]]).value != 1){
+        $(this.$squares[this.currentLi + shape.rotations[this.rotation][i]]).css({
           background: "radial-gradient(" + shape.colour + ", #555)" 
         });
       }
     }
   }
 
-  Tetris.fillInBlocks = function(){
+Tetris.fillInBlocks = function(){
     for (var i = 0; i < 4; i++){
       $(this.$squares)[this.currentLi + this.chosenOne.rotations[this.rotation][i]].value = 1;
     }
   }
 
-  Tetris.checkForRow = function(){
+Tetris.checkForRow = function(){
     for (var k = 0; k < 24; k++){
       var rowFilled = true;
       for (var l = 0; l < 10; l++){
         if ($(this.$squares)[10*k+l].value != 1){
-          this.rowFilled = false;
+          rowFilled = false;
           continue;
         }
       }
@@ -606,3 +611,5 @@ Tetris.letsRotate = function(e){
     }
     this.$squares = $('.squares');
   }
+
+$(Tetris.setup.bind(Tetris));
