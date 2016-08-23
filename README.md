@@ -2,21 +2,17 @@
 ####A Tetris Game by Johnnie de La Moriniere
 
 
-##TECHNOLOGY
+##Overview
 
-The game is built using HTML5, CSS3 and JavaScript/JQuery.
+This game was created as my first project during a Web Development Course in London. It was built using HTML5, CSS3 and JavaScript/JQuery.
 
-##OVERVIEW
-
-This game was created as my first project during a Web Development Course in London. 
-
-##CONTROLS
+##Controls
 * Left/Right - move the active shape along the x-axis in the grid
 * Down - Speed up the descent of the shape
 * Esc - pause the game
 * M - mute the sounds
 
-##JS/JQUERY OVERIVEW
+##JavaScript/jQuery Overview
 #####Grid Structure
 A standard Tetris grid consists of 200 squares (20 rows of 10), but my grid contains an extra 4 rows, which are hidden above the upper edge of the grid div. This area is used to originally generate each new shape before it drops into the visible area of the grid. 
 
@@ -42,14 +38,14 @@ Local variables are set up in correpsonding functions for each of the movement t
 #####Interval for dropping pieces
 As in any game of Tetris, the shapes drop at regular intervals. The function that causes the drop is called by another function which considers an interval. The length of the interval changes as the time goes on, with its length reducing by 20% with each new level.
 
-#####Design
+##CSS Design
 The design of the game (sound/images/CSS) was inspired by 80s 8-bit arcade-games. This approach - along with a setting in Miami - gave me an excuse to put a colourful twist on one of my favourite puzzle games.
 
-##DISCLAIMER 
+##Disclaimer 
 
 Several pieces of content featured in this site were taken from other sources. A list of these can be found below. If - for any reason - the owner of any of the pieces of content so wishes, I am very happy to edit the site accordingly. 
 
-###CONTENT CREDITS
+###Content credits
 
 #####Music/Sound effects:
 *https://www.youtube.com/user/brandnameaudio - Brand Name Audio
