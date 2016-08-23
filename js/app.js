@@ -207,7 +207,7 @@ Tetris.startTheGame = function(){
 Tetris.incrementStartingLevel = function(){
   $('#blip').trigger('play');
   this.level++;
-  if (this.level === 6){
+  if (this.level === 10){
     this.level = 1;
   }
   $('span').html(this.level);
@@ -544,10 +544,7 @@ Tetris.leftMove = function(e){
     }
   }
 
-
   // move right button
-
-
 Tetris.rightMove = function(e){
     if (e.keyCode == 39 && ((this.currentLi + this.chosenOne.rightmost[this.rotation] + 1)%10 !==0)){
       var iCanGoRight = true;
@@ -585,12 +582,14 @@ Tetris.lightEmUp = function(shape){
     }
   }
 
+//When brick is in final resting place, this permanently fills in with color (until row deletion)
 Tetris.fillInBlocks = function(){
     for (var i = 0; i < 4; i++){
       $(this.$squares)[this.currentLi + this.chosenOne.rotations[this.rotation][i]].value = 1;
     }
   }
 
+//This checks for compelted rows and removes the bricks
 Tetris.checkForRow = function(){
     for (var k = 0; k < 24; k++){
       var rowFilled = true;
