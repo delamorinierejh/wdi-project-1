@@ -176,8 +176,8 @@ Tetris.brandNewGame = function(){
   this.isFirstLoad = true;
   this.clearTheBoard();
   $(this.$modal).show();
-  this.$modalHeading.html('Miami Tetris');
-  this.$header.html('Miami Tetris');
+  this.$modalHeading.html('Miami Blocks');
+  this.$header.html('Miami Blocks');
   this.highscore = localStorage.getItem("highscore");
   $('#modal p').html('High Score: ' + this.highscore);
   $('#new-game').html('Start Game');
