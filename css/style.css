@@ -4,25 +4,26 @@ body {
   background-size: cover;
   width: 660px;
   margin: 0 auto;
-  font-family: 'Orbitron', sans-serif;
   font-family: 'Press Start 2P', cursive;
   color: silver;
 }
 
 header {
-  margin: 15px auto 0 auto;
+  margin: 0px auto 0 auto;
   text-align: center;
-  font-size: 36px;
-  font-weight: 700;
+  font-size: 82px;
+  font-family: 'Mistral', 'Press Start 2P', cursive;
+  font-weight: 400;
   text-shadow: 4px 4px #313d99;
-  color: #e4db6d;
+  color: #d626b5;
+  height: 74px;
 }
 
 main {
   height: 530px;
   width: 600px;
   background: red;
-  margin: 15px auto 0  auto;
+  margin: 2px auto 0  auto;
   border-radius: 10px;
   border: 1px solid silver;
   background: -webkit-linear-gradient(#2a2a22, #26248e, #2a2a22); /* For Safari 5.1 to 6.0 */
@@ -31,9 +32,6 @@ main {
   background: linear-gradient(#2a2a22, #26248e, #2a2a22); /* Standard syntax */
 }
 
-footer{
-margin-top: 20px;
-}
 
 footer ul {
   margin-top: 0px;
@@ -81,9 +79,10 @@ em {
 }
 
 #modal h2 {
-  margin-top: -55px;
-  margin-bottom: -300px;
-  font-size: 30px;
+  font-family: 'Mistral', 'Press Start 2P', cursive;
+  margin-top: -60px;
+  margin-bottom: -287px;
+  font-size: 80px;
   text-shadow: 3px 3px #526db9;
   color: #dde339;
 }
@@ -151,15 +150,17 @@ button:focus {
 
 
 #score-block li h3{
+  font-family: 'Press Start 2P', cursive;
   padding-top: 2px;
   text-align: center;
+  font-size: 14px;
   text-shadow: 2px 2px #000;
   padding-bottom: 3px;
 }
 
 #score-block li p {
   line-height: 40px;
-  font-size: 23px;
+  font-size: 20px;
   text-shadow: 2px 2px #000;
   color: gold;
 }
@@ -213,8 +214,7 @@ button:focus {
   height: 58px;
   line-height: 56px;
   /*border: 1px solid black;*/
-  text-align: center;
-  font-size: 30px;
+  text-align: center;=
   text-shadow: 2px 2px #000;
   background-repeat: no-repeat;
   background-position: center;
@@ -222,8 +222,10 @@ button:focus {
 }
 
 #next-up h3 {
+  font-family: 'Press Start 2P', cursive;
   text-align: center;
   padding-top: 5px;
   height: 20px;
+  font-size: 14px;
   text-shadow: 2px 2px #000;
 }

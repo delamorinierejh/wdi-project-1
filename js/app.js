@@ -130,7 +130,7 @@ this.currentColumn = ('' + this.currentLi).split('')[('' + this.currentLi).split
     shiftUp: [0,1,0,1],
     image: 'images/sShape.png'
   };
-  
+
   //array from which the random shape is taken
   this.possibleShapes = [this.iShape, this.jShape, this.lShape, this.oShape, this.sShape, this.zShape, this.tShape];
   // variables that choose the initial random shapes
@@ -176,8 +176,8 @@ Tetris.brandNewGame = function(){
   this.isFirstLoad = true;
   this.clearTheBoard();
   $(this.$modal).show();
-  this.$modalHeading.html('BLOCK PARTY');
-  this.$header.html('MIND THE BLOCKS');
+  this.$modalHeading.html('Block Party');
+  this.$header.html('Mind the Blocks');
   this.highscore = localStorage.getItem("highscore");
   $('#modal p').html('High Score: ' + this.highscore);
   $('#new-game').html('Start Game');
@@ -318,17 +318,17 @@ Tetris.gameOverAlert = function(){
   clearTimeout(this.timeoutId);
   $(this.$modal).show();
   if (this.isHighScore){
-    this.$modalHeading.html('GAME OVER');
+    this.$modalHeading.html('Game Over');
     $('#modal p').html('New High Score: ' + this.score + "!!!");
   } else {
-    this.$modalHeading.html('GAME OVER');
+    this.$modalHeading.html('Game Over');
     $('#modal p').html('Score: ' + this.score);
   }
   $('#new-game').html('New Game');
   $('#new-game').off('click');
   $('#new-game').on('click', this.brandNewGame.bind(this));
   this.disableKeyboard();
-  this.$header.html('GAME OVER');
+  this.$header.html('Game Over');
   $('#increment-level').hide();
 }
 
@@ -351,7 +351,7 @@ Tetris.pauseTheGame = function(e){
       clearTimeout(this.timeoutId);
       this.paused = true;
       $(this.$modal).show();
-      this.$modalHeading.html('GAME PAUSED');
+      this.$modalHeading.html('Game Paused');
       $('#modal p').html('_________________________________');
       $('#new-game').html('New Game');
       $('#new-game').off('click');
