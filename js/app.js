@@ -152,10 +152,10 @@ Tetris.startTheGame = function(){
   this.paused = true;
   this.resumeTheGame();
   this.isHighScore = false;
-  $('#bloc-party').trigger('pause');
-  if (this.isFirstLoad){
-    $('#intro-song').trigger('play');
-  }
+  // $('#bloc-party').trigger('pause');
+  // if (this.isFirstLoad){
+  //   $('#intro-song').trigger('play');
+  // }
   this.isFirstLoad = false;
 }
 
@@ -176,8 +176,8 @@ Tetris.brandNewGame = function(){
   this.isFirstLoad = true;
   this.clearTheBoard();
   $(this.$modal).show();
-  this.$modalHeading.html('Block Party');
-  this.$header.html('Mind the Blocks');
+  this.$modalHeading.html('Miami Tetris');
+  this.$header.html('Miami Tetris');
   this.highscore = localStorage.getItem("highscore");
   $('#modal p').html('High Score: ' + this.highscore);
   $('#new-game').html('Start Game');
