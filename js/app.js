@@ -196,6 +196,7 @@ Tetris.startTheGame = function(){
   this.updateTheBoard();
   this.paused = true;
   this.resumeTheGame();
+  this.isHighScore = false;
   $('#bloc-party').trigger('pause');
   if (this.isFirstLoad){
     $('#intro-song').trigger('play');
