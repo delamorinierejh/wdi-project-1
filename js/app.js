@@ -5,9 +5,9 @@ var Tetris            = Tetris || {};
 window.addEventListener("keydown", function(e) {
     // space and arrow keys
     if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
-        e.preventDefault();
+      e.preventDefault();
     }
-}, false);
+  }, false);
 
 
 Tetris.setup          = function(){
@@ -32,15 +32,15 @@ Tetris.setup          = function(){
    if (this.score > this.highscore) {
     localStorage.setItem("highscore", this.score );
   }
-  }else{
+}else{
   localStorage.setItem("highscore", this.score );
-  }
-  this.lines          = 0;
-  this.level          = 1;
-  this.rotation       = 0;
-  this.currentLi      = Math.floor(Math.random()*3)+14;
-  this.currentRow     = 0;
-  this.currentColumn  = ('' + this.currentLi).split('')[('' + this.currentLi).split('').length -1];
+}
+this.lines          = 0;
+this.level          = 1;
+this.rotation       = 0;
+this.currentLi      = Math.floor(Math.random()*3)+14;
+this.currentRow     = 0;
+this.currentColumn  = ('' + this.currentLi).split('')[('' + this.currentLi).split('').length -1];
 
   //variables that are needed on the global scope but are undefined on page load
   this.timeoutId;

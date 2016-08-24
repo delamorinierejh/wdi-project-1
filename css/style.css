@@ -59,21 +59,21 @@ em {
 
 #modal {
   position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 620px;
-    line-height: 200px;
-    height: 200px;
-    margin-left: -320px;
-    margin-top: -120px;
-    background-color: #4a4141;
-    text-align: center;
-    border: 10px ridge #182c9d;
-    border-radius: 20px;
-    /* needed styles for the overlay */
-    z-index: 10; /* keep on top of other elements on the page */
-    outline: 9999px solid rgba(0,0,0,0.5);
-  }
+  top: 50%;
+  left: 50%;
+  width: 620px;
+  line-height: 200px;
+  height: 200px;
+  margin-left: -320px;
+  margin-top: -120px;
+  background-color: #4a4141;
+  text-align: center;
+  border: 10px ridge #182c9d;
+  border-radius: 20px;
+  /* needed styles for the overlay */
+  z-index: 10; /* keep on top of other elements on the page */
+  outline: 9999px solid rgba(0,0,0,0.5);
+}
 
 #modal:hover {
   cursor: url(../images/tetris_pointer.png), pointer;
@@ -126,7 +126,7 @@ input:focus,
 select:focus,
 textarea:focus,
 button:focus {
-    outline: none;
+  outline: none;
 }
 
 
@@ -220,7 +220,7 @@ button:focus {
   text-shadow: 2px 2px #000;
   background-repeat: no-repeat;
   background-position: center;
-/*  background-size: */
+  /*  background-size: */
 }
 
 #next-up h3 {
