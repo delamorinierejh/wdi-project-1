@@ -52,7 +52,7 @@ Many thanks to my course instructors **Alex** and **Rane** for their help and ad
 
 ##Disclaimer 
 
-Several pieces of content featured in this site were taken from other sources. A list of these can be found below. If - for any reason - the owner of any of the pieces of content so wishes, I am very happy to edit the game accordingly. 
+This site was built as part of an educational purposes on a budget of £0.00. Several pieces of content featured were taken from other sources. A list of these can be found below. If - for any reason - the owner of any of the pieces of content so wishes, I am very happy to edit the game accordingly. 
 
 ###Content credits
 
