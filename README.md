@@ -2,15 +2,21 @@
 ####A Tetris Game by Johnnie de La Moriniere
 
 
-##Overview
+![alt text](http://i.imgur.com/LdUPIwf.png "Miami Blocks Start Screen")
 
-This game was created as my first project during a Web Development Course in London. It was built using HTML5, CSS3 and JavaScript/JQuery.
+![alt text](http://i.imgur.com/8OXoYxw.png "Miami Blocks Gameplay")
+
+##Overview
+**Miami Blocks** was created as my first project during a Web Development Course in London. It was built using HTML5, CSS3 and JavaScript/JQuery.
+
+##How To Play
+The object of the game is to play for as long as possible before the shapes stack up too high and break the top edge of the grid. In order to survive, you need to arrange the falling shapes in such a way as to fill rows, which will then be deleted, create extra space. **Basically it's Tetris**
 
 ##Controls
-* Left/Right - move the active shape along the x-axis in the grid
-* Down - Speed up the descent of the shape
-* Esc - pause the game
-* M - mute the sounds
+* **Left/Right** - move the active shape along the x-axis in the grid
+* **Down** - Speed up the descent of the shape
+* **Esc** - pause the game
+* **M** - mute the sounds
 
 ##JavaScript/jQuery Overview
 #####Grid Structure
@@ -41,6 +47,9 @@ As in any game of Tetris, the shapes drop at regular intervals. The function tha
 ##CSS Design
 The design of the game (sound/images/CSS) was inspired by 80s 8-bit arcade-games. This approach - along with a setting in Miami - gave me an excuse to put a colourful twist on one of my favourite puzzle games.
 
+##Credits
+Many thanks to my course instructors **Alex** and **Rane** for their help and advice on this project.
+
 ##Disclaimer 
 
 Several pieces of content featured in this site were taken from other sources. A list of these can be found below. If - for any reason - the owner of any of the pieces of content so wishes, I am very happy to edit the site accordingly. 
@@ -48,12 +57,12 @@ Several pieces of content featured in this site were taken from other sources. A
 ###Content credits
 
 #####Music/Sound effects:
-*https://www.youtube.com/user/brandnameaudio - Brand Name Audio
-https://www.youtube.com/channel/UCG1GQMSlp1eZAwk9RFo9nqg - NitromathThePizzaGuy*
-
+- [**Brand Name Audio**](https://www.youtube.com/user/brandnameaudio)
+- [**NitromathThePizzaGuy**](https://www.youtube.com/channel/UCG1GQMSlp1eZAwk9RFo9nqg)
 
 #####Background Image:
-*http://lamebwoy.tumblr.com/post/54328536719/8-bit-city*
+- [**8-bit City**](*http://lamebwoy.tumblr.com/post/54328536719/8-bit-city*)
+
 
 
 
