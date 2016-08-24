@@ -167,15 +167,15 @@ Tetris.incrementStartingLevel = function(){
 
 //the function that is run when the user selects 'New Game' from the pause menu. It resets the modal and a range of variables to their original settings on load time.
 Tetris.brandNewGame = function(){
+  $(this.$modal).hide();
   $('#bloc-party').load();
   $('#bloc-party').trigger('play');
   this.isFirstLoad  = true;
   this.highscore    = localStorage.getItem("highscore");
   this.clearTheBoard();
-  $(this.$modal).show();
   this.$modalHeading.html('Miami Blocks');
   this.$header.html('Miami Blocks');
-  $('#modal p').html('High Score: ' + this.highscore);
+  $('#modal p').html('High Score: ' + this.highscore);  
   $('#new-game').html('Start Game');
   $('#new-game').off('click');
   $('#new-game').on('click', this.startTheGame.bind(this));
@@ -184,6 +184,7 @@ Tetris.brandNewGame = function(){
   $('#increment-level').show();
   $('#increment-level').off('click');
   $('#increment-level').on('click', this.incrementStartingLevel.bind(this));
+  $(this.$modal).show(200);
 }
 
 //the function that is called to set up keyboard event listeners once the game has started/resumed.
@@ -312,7 +313,7 @@ Tetris.gameOverAlert = function(){
   $('#bloc-party').trigger('pause');
   this.paused        = true;
   clearTimeout(this.timeoutId);
-  $(this.$modal).show();
+  $(this.$modal).show(200);
   if (this.isHighScore){
     this.$modalHeading.html('Game Over');
     $('#modal p').html('New High Score: ' + this.score + "!!!");
@@ -346,7 +347,7 @@ Tetris.pauseTheGame = function(e){
       //this pauses the set Timeout so that the shape will stop movng down a row whilst the game is paused
       clearTimeout(this.timeoutId);
       this.paused   = true;
-      $(this.$modal).show();
+      $(this.$modal).show(200);
       this.$modalHeading.html('Game Paused');
       $('#modal p').html('_________________________________');
       $('#new-game').html('New Game');
@@ -364,7 +365,7 @@ Tetris.pauseTheGame = function(e){
 Tetris.resumeTheGame = function(){
   $('#blip').trigger('play');
   this.paused        = false;
-  $(this.$modal).hide();
+  $(this.$modal).hide(200);
   this.goDown();
   this.setUpKeyboard();
 }
