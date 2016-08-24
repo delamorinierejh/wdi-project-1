@@ -12,9 +12,13 @@ window.addEventListener("keydown", function(e) {
 
 Tetris.setup          = function(){
 
+  //setting up the grid
+  this.$grid          = $('#grid-ul');
+  for (var i = 0; i < 240; i++) {
+  $(this.$grid).prepend("<li class='squares' value='0' id='hidden-1-1'></li>");
+  }
   // selecting key DOM elements
   this.$squares       = $('.squares');
-  this.$grid          = $('#grid-ul');
   this.$scoreBoard    = $('#score-count');
   this.$lineBoard     = $('#lines-count');
   this.$levelBoard    = $('#level-count');
