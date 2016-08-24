@@ -3,6 +3,7 @@ body {
   background-image: url('../images/8-bit-background.png');
   background-size: cover;
   width: 660px;
+  max-height: 645px;
   margin: 0 auto;
   font-family: 'Press Start 2P', cursive;
   color: #d8d8d8;
