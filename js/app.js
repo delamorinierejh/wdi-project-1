@@ -159,7 +159,7 @@ Tetris.startTheGame   = function(){
   var holdLevel       = this.level;
   this.clearTheBoard();
   this.level          = holdLevel;
-  this.interval       = 750 * (Math.pow(0.8,(this.level-1)));
+  this.interval       = 650 * (Math.pow(0.8,(this.level-1)));
   this.determineNewBlocks();
   this.updateTheBoard();
   this.paused         = true;
