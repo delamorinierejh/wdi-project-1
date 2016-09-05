@@ -1,6 +1,4 @@
-
 var Tetris            = Tetris || {};
-
 
 window.addEventListener("keydown", function(e) {
     // space and arrow keys
@@ -8,7 +6,6 @@ window.addEventListener("keydown", function(e) {
       e.preventDefault();
     }
   }, false);
-
 
 Tetris.setup          = function(){
 

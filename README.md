@@ -9,6 +9,8 @@
 ##Overview
 **Miami Blocks** was created as my first project for a Web Development Course in London. It was built using HTML5, CSS3 and JavaScript/JQuery.
 
+The game can be played here: [**Miami Blocks**](https://miami-blocks.herokuapp.com/)
+
 ##How To Play
 The object of the game is to play for as long as possible before the shapes stack up too high and break the top edge of the grid. In order to survive, you need to arrange the falling shapes in such a way as to fill rows, which will then be deleted, creating extra space. **Basically it's Tetris**
 
