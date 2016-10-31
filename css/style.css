@@ -12,12 +12,17 @@ body {
 header {
   margin: 0px auto 0 auto;
   text-align: center;
-  font-size: 82px;
-  font-family: 'Mistral', 'Press Start 2P', cursive;
+  font-size: 38px
+  font-family:  'Press Start 2P', cursive;
   font-weight: 400;
   text-shadow: 4px 4px #313d99;
   color: #d626b5;
   height: 74px;
+}
+
+header h1 {
+  font-size: 38px;
+  padding-top: 10px;
 }
 
 main {
@@ -80,10 +85,10 @@ em {
 }
 
 #modal h2 {
-  font-family: 'Mistral', 'Press Start 2P', cursive;
+  font-family:  'Press Start 2P', cursive;
   margin-top: -60px;
   margin-bottom: -287px;
-  font-size: 80px;
+  font-size: 38px;
   text-shadow: 3px 3px #970ac5;
   color: #dee339;
 }
