@@ -7,7 +7,7 @@
 ![alt text](http://i.imgur.com/8OXoYxw.png "Miami Blocks Gameplay")
 
 ##Overview
-**Miami Blocks** was created as my first project for a Web Development Course in London. It was built using HTML5, CSS3 and JavaScript/JQuery.
+**Miami Blocks** was created as my first project for a Web Development Course in London. It was built using HTML5, CSS3 and JavaScript/jQuery.
 
 The game can be played here: [**Miami Blocks**](https://miami-blocks.herokuapp.com/)
 

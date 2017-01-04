@@ -13,7 +13,7 @@ header {
   margin: 0px auto 0 auto;
   text-align: center;
   font-size: 38px
-  font-family:  'Press Start 2P', cursive;
+  font-family:  'Mistral', 'Press Start 2P', cursive;
   font-weight: 400;
   text-shadow: 4px 4px #313d99;
   color: #d626b5;
@@ -21,7 +21,8 @@ header {
 }
 
 header h1 {
-  font-size: 38px;
+  font-family:  'Mistral', 'Press Start 2P', cursive;
+  font-size: 68px;
   padding-top: 10px;
 }
 
@@ -85,10 +86,10 @@ em {
 }
 
 #modal h2 {
-  font-family:  'Press Start 2P', cursive;
+  font-family: 'Mistral', 'Press Start 2P', cursive;
   margin-top: -60px;
   margin-bottom: -287px;
-  font-size: 38px;
+  font-size: 68px;
   text-shadow: 3px 3px #970ac5;
   color: #dee339;
 }
@@ -112,9 +113,9 @@ em {
   border: 4px ridge #2196f3;
   border-radius: 20px;
   font-family: 'Press Start 2P', cursive;
-  background: -webkit-linear-gradient(#050546, #26248e, #050546); 
+  background: -webkit-linear-gradient(#050546, #26248e, #050546);
   background: -o-linear-gradient(#050546, #26248e, #050546);
-  background: -moz-linear-gradient(#050546, #26248e, #050546); 
+  background: -moz-linear-gradient(#050546, #26248e, #050546);
   background: linear-gradient(#050546, #26248e, #050546);
   color: #ef7d36;
   font-size: 14px;
@@ -170,6 +171,10 @@ button:focus {
   font-size: 20px;
   text-shadow: 2px 2px #000;
   color: gold;
+}
+
+p#blurb {
+  font-family: 'Press Start 2P', cursive;
 }
 
 #playing-grid {
